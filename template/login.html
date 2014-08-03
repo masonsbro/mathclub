@@ -8,6 +8,8 @@
 	{% include "display_alerts.html" %}
 	<form role="form" method="POST" action="/login/">
 		{% csrf_token %}
+		<input type="text" name="prevent_autofill_1" style="display: none">
+		<input type="password" name="prevent_autofill_2" style="display: none">
 		<div class="form-group">
 			<input type="email" class="form-control" name="email" placeholder="Email" value="{{ email_preset }}">
 		</div>
