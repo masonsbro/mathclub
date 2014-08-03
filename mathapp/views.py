@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 
+from mathapp.models import *
+
 # Create your views here.
 
 def index(req):
