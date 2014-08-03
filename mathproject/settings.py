@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'vlt!&&m$pop%zznka1!m4i*ythl(l$j6_mg*k(u-)0z&)*vahl'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -57,16 +57,10 @@ WSGI_APPLICATION = 'mathproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'ec2-54-197-246-197.compute-1.amazonaws.com',
-        'PORT': '5432',
-        'NAME': 'd5vtkqiunmu5ak',
-        'USER': 'oeaectrgsrzlfj',
-        'PASSWORD': 'IYJj1i_opmB4T-q19dErNRgXYh',
-    }
-}
+DATABASES = {}
+
+import dj_database_url
+DATABASES['default'] = dj_database_url.config()
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
