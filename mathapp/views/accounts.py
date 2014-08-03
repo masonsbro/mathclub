@@ -66,3 +66,6 @@ def logout(req, context):
 	if 'email' in req.session:
 		del req.session['email']
 	return redirect("/")
+
+@check_logged_in
+def account(req, context):
