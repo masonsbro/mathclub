@@ -1,0 +1,30 @@
+{% extends "parent.html" %}
+
+{% block title %}Account{% endblock %}
+
+{% block content %}
+	<h1>Account</h1>
+	<hr>
+	{% include "display_alerts.html" %}
+	<form role="form" method="POST" action="/account/">
+		{% csrf_token %}
+		<h2>Change Email</h2>
+		<div class="form-group">
+			<input type="email" class="form-control" name="email" placeholder="Email" value="{{ user.email }}">
+		</div>
+		<hr>
+		<h2>Change Password</h2>
+		<div class="form-group">
+			<input type="password" class="form-control" name="password" placeholder="Password">
+		</div>
+		<div class="form-group">
+			<input type="password" class="form-control" name="password_confirm" placeholder="Confirm Password">
+		</div>
+		<hr>
+		<h2>Save Changes</h2>
+		<div class="form-group">
+			<input type="password" class="form-control" name="password_current" placeholder="Current Password">
+		</div>
+		<button type="submit" class="btn btn-primary btn-block">Save</button>
+	</form
+{% endblock %}

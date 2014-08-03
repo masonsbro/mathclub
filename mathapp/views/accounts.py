@@ -67,5 +67,31 @@ def logout(req, context):
 		del req.session['email']
 	return redirect("/")
 
+@init_alerts
 @check_logged_in
+@only_logged_in
 def account(req, context):
+	if req.method == 'GET':
+		return render(req, "account.html", context)
+	else:
+		# Process account changes
+		user = context['user']
+		if not user.check_password(req.POST['password_current']):
+			context['danger_alerts'].append(WRONG_CURRENT_PASSWORD)
+		else:
+			if req.POST['email']:
+				try:
+					user.email = req.POST['email']
+					req.session['email'] = user.email
+				except:
+					context['danger_alerts'].append(EMAIL_ALREADY_EXISTS)
+			if req.POST['password']:
+				if req.POST['password'] != req.POST['password_confirm']:
+					context['danger_alerts'].append(PASSWORD_MISMATCH)
+				else:
+					user.set_password(req.POST['password'])
+		if context['danger_alerts']:
+			return render(req, "account.html", context)
+		else:
+			user.save()
+			return redirect("/")
