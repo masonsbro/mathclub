@@ -12,3 +12,14 @@ def check_logged_in(func):
 			context['user'] = None
 		return func(req, context, *args, **kwargs)
 	return wrapper
+
+def init_alerts(func):
+	def wrapper(req, context = None, *args, **kwargs):
+		if context is None:
+			context = {}
+		context['success_alerts'] = []
+		context['info_alerts'] = []
+		context['warning_alerts'] = []
+		context['danger_alerts'] = []
+		return func(req, context, *args, **kwargs)
+	return wrapper

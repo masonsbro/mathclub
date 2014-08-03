@@ -8,8 +8,8 @@ from django.db import models
 class User(models.Model):
 
 	email = models.EmailField(unique = True)
-	password_hash = models.CharField(max_length = 128)
-	password_salt = models.CharField(max_length = 32)
+	password_hash = models.CharField(max_length = 128, null = True, blank = True, default = "")
+	password_salt = models.CharField(max_length = 32, null = True, blank = True, default = "")
 	reset_code = models.CharField(max_length = 32, null = True, blank = True, default = "")
 	admin = models.BooleanField(default = False)
 	contributor = models.BooleanField(default = False)

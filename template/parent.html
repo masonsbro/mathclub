@@ -36,8 +36,13 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/login/" target="_blank">Login</a></li>
-						<li><a href="/register/" target="_blank">Register</a></li>
+						{% if not user %}
+							<li><a href="/login/">Login</a></li>
+							<li><a href="/register/">Register</a></li>
+						{% else %}
+							<li><a href="/account/">Account</a></li>
+							<li><a href="/logout/">Logout</a></li>
+						{% endif %}
 					</ul>
 				</div>
 			</div>

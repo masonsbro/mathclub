@@ -1,0 +1,17 @@
+{% extends "parent.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+	{% include "display_alerts.html" %}
+	<form role="form" method="POST" action="/login/">
+		{% csrf_token %}
+		<div class="form-group">
+			<input type="email" class="form-control" name="email" placeholder="Email" value="{{ email_preset }}">
+		</div>
+		<div class="form-group">
+			<input type="password" class="form-control" id="password" placeholder="Password">
+		</div>
+		<button type="submit" class="btn btn-primary btn-block">Login</button>
+	</form>
+{% endblock %}

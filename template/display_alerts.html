@@ -1,0 +1,15 @@
+{% for alert in success_alerts %}
+	<div class="alert alert-success">{{ alert }}</div>
+{% endfor %}
+
+{% for alert in info_alerts %}
+	<div class="alert alert-info">{{ alert }}</div>
+{% endfor %}
+
+{% for alert in warning_alerts %}
+	<div class="alert alert-warning">{{ alert }}</div>
+{% endfor %}
+
+{% for alert in danger_alerts %}
+	<div class="alert alert-danger">{{ alert }}</div>
+{% endfor %}
