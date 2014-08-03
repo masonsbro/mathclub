@@ -14,6 +14,7 @@ class User(models.Model):
 	admin = models.BooleanField(default = False)
 	contributor = models.BooleanField(default = False)
 	active = models.BooleanField(default = False)
+	name = models.CharField(max_length = 64, null = True, blank = True, default = "")
 
 	def set_password(self, password):
 		# Generate random salt
@@ -33,3 +34,9 @@ class User(models.Model):
 		hashed = hashlib.sha512(salted).hexdigest()
 		# Check it against the stored one
 		return self.password_hash == hashed
+
+class BlogPost(models.Model):
+
+	title = models.CharField(max_length = 256)
+	body = models.TextField()
+	author = models.ForeignKey('User')

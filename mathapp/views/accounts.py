@@ -48,7 +48,7 @@ def register(req, context):
 				context['danger_alerts'].append(PASSWORD_MISMATCH)
 			if not context['danger_alerts']:
 				try:
-					user = User(email = req.POST['email'])
+					user = User(email = req.POST['email'], name = req.POST['name'])
 					user.set_password(req.POST['password'])
 					user.save()
 					req.session['email'] = req.POST['email']
@@ -56,6 +56,7 @@ def register(req, context):
 				except:
 					context['danger_alerts'].append(EMAIL_ALREADY_EXISTS)
 			context['email_preset'] = req.POST['email']
+			context['name_preset'] = req.POST['name']
 			return render(req, "register.html", context)
 		else:
 			# Already logged in
@@ -90,6 +91,8 @@ def account(req, context):
 					context['danger_alerts'].append(PASSWORD_MISMATCH)
 				else:
 					user.set_password(req.POST['password'])
+			if req.POST['name']:
+				user.name = req.POST['name']
 		if context['danger_alerts']:
 			return render(req, "account.html", context)
 		else:
