@@ -13,6 +13,16 @@ def check_logged_in(func):
 		return func(req, context, *args, **kwargs)
 	return wrapper
 
+def only_logged_in(func):
+	def wrapper(req, context = None, *args, **kwargs):
+		if context is None:
+			context = {}
+		if 'user' in context or 'email' in req.session:
+			return func(req, context, *args, **kwargs)
+		else:
+			return redirect("/")
+	return wrapper
+
 def init_alerts(func):
 	def wrapper(req, context = None, *args, **kwargs):
 		if context is None:
