@@ -1,5 +1,7 @@
 import hashlib
 import uuid
+import random
+import re
 
 from django.db import models
 
@@ -63,7 +65,18 @@ class ProblemGenerator(models.Model):
 	author = models.ForeignKey('User')
 
 	def generate_problem(self):
-		# Replace variables in question with random values
-		# Replace variables in answer with same values and evaluate
-		exec(setup)
-		return self.question, float(self.answer)
+		# Run setup code
+		# Replace [expressions] in question with evaulated versions
+		# Evaluate answer
+		exec(self.setup)
+		pattern = re.compile(r'\[.+\]')
+		question = str(self.question)
+		matches = pattern.findall(question)
+		for match in matches:
+			inner = match[1:-1]
+			inner = eval(inner)
+			inner = str(inner)
+			question = question.replace(match, inner)
+		answer = eval(self.answer)
+		answer = float(answer)
+		return question, answer

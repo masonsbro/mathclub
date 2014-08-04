@@ -69,4 +69,7 @@ def admin_problems(req, context):
 @only_logged_in
 @only_admin_or_contrib
 def admin_problems_new(req, context):
-	return render(req, "admin_problems_new.html", context)
+	if req.method == 'GET':
+		return render(req, "admin_problems_new.html", context)
+	else:
+		problem = ProblemGenerator()
