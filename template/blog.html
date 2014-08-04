@@ -13,7 +13,7 @@
 		{% if post.date_created != post.date_modified %}
 			<h5> Last edited: {{ post.date_modified|date:"F j, Y" }}</h5>
 		{% endif %}
-		<hr>
+		{% if not forloop.last %}<hr>{% endif %}
 	{% empty %}
 		No posts found.
 	{% endfor %}
