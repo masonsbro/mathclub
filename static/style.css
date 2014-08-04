@@ -13,3 +13,7 @@ td.row-click:hover a {
 textarea {
 	resize: vertical;
 }
+
+.centertext {
+	text-align: center;
+}

@@ -1,0 +1,39 @@
+{% extends "parent.html" %}
+
+{% block title %}Practice{% endblock %}
+
+{% block content %}
+	{% include "display_alerts.html" %}
+	<h1>Practice</h1>
+	<hr>
+	<h2>Difficulty: {{ problem.skill.difficulty.name }}</h2>
+	<h3>Skill: {{ problem.skill.name }}</h3>
+	<hr>
+	<p>{{ question }}</p>
+	<form role="form" method="POST">
+		{% csrf_token %}
+		<input type="hidden" name="time" id="time" value="0">
+		<div class="form-group">
+			<div class="row">
+				{% if problem.answer_prefix and problem.answer_suffix %}
+					<div class="col-xs-2 col-sm-1 centertext">{{ problem.answer_prefix }}</div>
+					<div class="col-xs-8 col-sm-10"><input type="text" class="form-control" name="answer" autofocus placeholder="Answer"></div>
+					<div class="col-xs-2 col-sm-1 centertext">{{ problem.answer_suffix }}</div>
+				{% elif problem.answer_prefix %}
+					<div class="col-xs-2 col-sm-1 centertext">{{ problem.answer_prefix }}</div>
+					<div class="col-xs-10 col-sm-11"><input type="text" class="form-control" name="answer" autofocus placeholder="Answer"></div>
+				{% elif problem.answer_suffix %}
+					<div class="col-xs-10 col-sm-11"><input type="text" class="form-control" name="answer" autofocus placeholder="Answer"></div>
+					<div class="col-xs-2 col-sm-1 centertext">{{ problem.answer_suffix }}</div>
+				{% else %}
+					<div class="col-xs-12"><input type="text" class="form-control" name="answer" autofocus placeholder="Answer"></div>
+				{% endif %}
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary btn-block">Check</button>
+	</form>
+{% endblock %}
+
+{% block scripts %}
+	<script src="/static/practice.js"></script>
+{% endblock %}

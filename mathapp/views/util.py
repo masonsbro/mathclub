@@ -57,3 +57,11 @@ def init_alerts(func):
 		context['danger_alerts'] = []
 		return func(req, context, *args, **kwargs)
 	return wrapper
+
+def log_practice(func):
+	def wrapper(req, context, *args, **kwargs):
+		if req.method == 'POST':
+			# Log answer and add alert
+			pass
+		return func(req, context, *args, **kwargs)
+	return wrapper
