@@ -1,0 +1,20 @@
+{% extends "parent.html" %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+	<h1>Blog</h1>
+	<hr>
+	{% for post in posts %}
+		<h2>{{ post.title }}</h2>
+		<h5>{{ post.author.name }}</h5>
+		<h5>{{ post.date_created|date:"F j, Y" }}</h5>
+		{{ post.body|linebreaks }}
+		{% if post.date_created != post.date_modified %}
+			<h5> Last edited: {{ post.date_modified|date:"F j, Y" }}</h5>
+		{% endif %}
+		<hr>
+	{% empty %}
+		No posts found.
+	{% endfor %}
+{% endblock %}
