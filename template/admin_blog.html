@@ -5,5 +5,32 @@
 {% block admin_blog_active %}class="active"{% endblock %}
 
 {% block admin_content %}
-
+	<table class="table">
+		<tr>
+			<th>Title</th>
+			<th>Author</th>
+			<th>Created</th>
+			<th>Edited</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+		<tr>
+			<td colspan="6" class="row-click"><a href="/admind/blog/new/">New Post</a></td>
+		</tr>
+		{% for post in posts %}
+			<tr>
+				<td>{{ post.title }}</td>
+				<td>{{ post.author.name }}</td>
+				<td>{{ post.date_created|date:"F j" }}</td>
+				<td>{{ post.date_modified|date:"F j" }}</td>
+				{% if post.author == user or user.admin %}
+					<td><a href="/admind/blog/edit/{{ post.pk }}/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+					<td><a href="/admind/blog/delete/{{ post.pk }}/" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a></td>
+				{% else %}
+					<td></td>
+					<td></td>
+				{% endif %}
+			</tr>
+		{% endfor %}
+	</table>
 {% endblock %}

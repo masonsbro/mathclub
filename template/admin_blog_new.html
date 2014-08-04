@@ -1,0 +1,20 @@
+{% extends "admin.html" %}
+
+{% block title %}New Post{% endblock %}
+
+{% block admin_blog_active %}class="active"{% endblock %}
+
+{% block admin_content %}
+	<form role="form" method="POST" action="/admind/blog/new/">
+		{% csrf_token %}
+		<div class="form-group">
+			<input type="text" class="form-control" name="title" placeholder="Title">
+		</div>
+		<div class="form-group">
+			<textarea class="form-control" name="body" rows="15"></textarea>
+		</div>
+		<div class="form-group">
+			<input type="submit" class="btn btn-primary btn-block" value="Post">
+		</div>
+	</form>
+{% endblock %}

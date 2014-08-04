@@ -1,0 +1,11 @@
+td.row-click a {
+	display: block;
+}
+
+td.row-click:hover {
+	background-color: #eeeeee;
+}
+
+td.row-click:hover a {
+	text-decoration: none;
+}
