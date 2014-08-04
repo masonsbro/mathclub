@@ -18,6 +18,7 @@ def practice_index(req, context):
 @log_practice
 def practice_skill(req, context, id):
 	context['problem'] = random.choice(ProblemGenerator.objects.filter(skill = Skill.objects.get(pk = id)))
+	req.session['problem'] = context['problem'].pk
 	context['question'], req.session['answer'] = context['problem'].generate_problem()
 	return render(req, "practice_problem.html", context)
 
@@ -26,6 +27,7 @@ def practice_skill(req, context, id):
 @log_practice
 def practice_difficulty(req, context, id):
 	context['problem'] = random.choice(ProblemGenerator.objects.filter(skill__difficulty = Difficulty.objects.get(pk = id)))
+	req.session['problem'] = context['problem'].pk
 	context['question'], req.session['answer'] = context['problem'].generate_problem()
 	return render(req, "practice_problem.html", context)
 
@@ -34,5 +36,6 @@ def practice_difficulty(req, context, id):
 @log_practice
 def practice_all(req, context):
 	context['problem'] = random.choice(ProblemGenerator.objects.all())
+	req.session['problem'] = context['problem'].pk
 	context['question'], req.session['answer'] = context['problem'].generate_problem()
 	return render(req, "practice_problem.html", context)

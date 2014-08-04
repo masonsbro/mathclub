@@ -92,3 +92,10 @@ class ProblemGenerator(models.Model):
 		answer = eval(self.answer)
 		answer = float(answer)
 		return question, answer
+
+class Practice(models.Model):
+
+	user = models.ForeignKey('User')
+	problem = models.ForeignKey('ProblemGenerator')
+	correct = models.BooleanField()
+	time = models.IntegerField()

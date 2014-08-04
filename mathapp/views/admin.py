@@ -89,7 +89,7 @@ def admin_problems_new(req, context):
 			context['danger_alerts'].append(INVALID_SKILL)
 		problem = ProblemGenerator(skill = Skill.objects.get(pk = req.POST['skill']), name = name, setup = setup,
 			question = req.POST['question'], answer = req.POST['answer'], author = context['user'],
-			answer_prefix = req.POST['answer_prefix'], answer_suffix = req.POST['answer_suffix'])
+			answer_prefix = req.POST['answer_prefix'], answer_suffix = req.POST['answer_suffix'], round = 'round' in req.POST)
 		try:
 			problem.generate_problem()
 		except:
@@ -102,12 +102,14 @@ def admin_problems_new(req, context):
 			context['answer_prefill'] = req.POST['answer']
 			context['answer_prefix_prefill'] = req.POST['answer_prefix']
 			context['answer_suffix_prefill'] = req.POST['answer_suffix']
+			context['round_prefill'] = 'round' in req.POST
 			context['difficulties'] = Difficulty.objects.order_by('pk')
 			return render(req, "admin_problems_new.html", context)
 		else:
 			problem.save()
 			return redirect("/admind/problems/")
 
+@init_alerts
 @check_logged_in
 @only_logged_in
 @only_admin_or_contrib
@@ -134,11 +136,12 @@ def admin_problems_edit(req, context, id):
 		problem = ProblemGenerator.objects.get(pk = id)
 		problem.skill = Skill.objects.get(pk = req.POST['skill'])
 		problem.name = name
-		problem.setup = setup,
+		problem.setup = setup
 		problem.question = req.POST['question']
 		problem.answer = req.POST['answer']
 		problem.answer_prefix = req.POST['answer_prefix']
 		problem.answer_suffix = req.POST['answer_suffix']
+		problem.round = 'round' in req.POST
 		try:
 			problem.generate_problem()
 		except:
