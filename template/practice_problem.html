@@ -9,7 +9,7 @@
 	<h2>Difficulty: {{ problem.skill.difficulty.name }}</h2>
 	<h3>Skill: {{ problem.skill.name }}</h3>
 	<hr>
-	<p>{{ question }}</p>
+	<p>{% if problem.round %}* {% endif %}{{ question }}</p>
 	<form role="form" method="POST">
 		{% csrf_token %}
 		<input type="hidden" name="time" id="time" value="0">
@@ -18,7 +18,7 @@
 				{% if problem.answer_prefix %}
 					<span class="input-group-addon">{{ problem.answer_prefix }}</span>
 				{% endif %}
-				<input type="text" class="form-control" name="answer" id="answer" autofocus placeholder="Answer">
+				<input type="text" class="form-control" name="answer" id="answer" autofocus placeholder="Answer" autocomplete="off">
 				{% if problem.answer_suffix %}
 					<span class="input-group-addon">{{ problem.answer_suffix }}</span>
 				{% endif %}

@@ -60,30 +60,36 @@ def init_alerts(func):
 		return func(req, context, *args, **kwargs)
 	return wrapper
 
-def check_answer(correct, check):
+def check_answer(correct, check, round):
 	try:
-		return float(correct) == float(check)
+		if round:
+			return abs(int(check) - float(correct)) < float(correct) / 20
+		try:
+			return float(correct) == float(check)
+		except:
+			pass
+		parts = check.split(' ')
+		if len(parts) == 1:
+			part = parts[0]
+			parts = part.split('/')
+			return float(correct) == float(parts[0]) / float(parts[1])
+		elif len(parts) == 2:
+			intPart = parts[0]
+			fracPart = parts[1]
+			fracs = fracPart.split('/')
+			return float(correct) == (float(intPart) + float(fracs[0]) / float(fracs[1]))
+		return False
 	except:
-		pass
-	parts = check.split(' ')
-	if len(parts) == 1:
-		part = parts[0]
-		parts = part.split('/')
-		return float(correct) == float(parts[0]) / float(parts[1])
-	elif len(parts) == 2:
-		intPart = parts[0]
-		fracPart = parts[1]
-		fracs = fracPart.split('/')
-		return float(correct) == (float(intPart) + float(fracs[0]) / float(fracs[1]))
-	return False
+		return False
 
 def log_practice(func):
 	def wrapper(req, context, *args, **kwargs):
 		if req.method == 'POST':
 			# Log answer and add alert
-			correct = check_answer(req.session['answer'], req.POST['answer'])
+			problem = ProblemGenerator.objects.get(pk = req.session['problem'])
+			correct = check_answer(req.session['answer'], req.POST['answer'], problem.round)
 			if 'email' in req.session:
-				practice = Practice(user = context['user'], problem = ProblemGenerator.objects.get(pk = req.session['problem']),
+				practice = Practice(user = context['user'], problem = problem,
 					correct = correct, time = req.POST['time'])
 				practice.save()
 			else:
