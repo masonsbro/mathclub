@@ -57,6 +57,7 @@ class ProblemGenerator(models.Model):
 
 	skill = models.ForeignKey('Skill')
 	name = models.CharField(max_length = 256)
+	setup = models.TextField()
 	question = models.CharField(max_length = 256)
 	answer = models.CharField(max_length = 256)
 	author = models.ForeignKey('User')
@@ -64,4 +65,5 @@ class ProblemGenerator(models.Model):
 	def generate_problem(self):
 		# Replace variables in question with random values
 		# Replace variables in answer with same values and evaluate
+		exec(setup)
 		return self.question, float(self.answer)

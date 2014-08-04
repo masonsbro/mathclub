@@ -1,0 +1,23 @@
+{% extends "admin.html" %}
+
+{% block title %}New Problem{% endblock %}
+
+{% block admin_problems_active %}class="active"{% endblock %}
+
+{% block admin_content %}
+	<form role="form" method="POST" action="/admind/problems/new/">
+		{% csrf_token %}
+		<div class="form-group">
+			<textarea class="form-control" name="setup" rows="5" placeholder="Setup Code (Python)"></textarea>
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" name="question" placeholder="Question">
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" name="answer" placeholder="Answer">
+		</div>
+		<div class="form-group">
+			<input type="submit" class="btn btn-primary btn-block" value="Create Problem">
+		</div>
+	</form>
+{% endblock %}

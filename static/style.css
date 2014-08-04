@@ -9,3 +9,7 @@ td.row-click:hover {
 td.row-click:hover a {
 	text-decoration: none;
 }
+
+textarea {
+	resize: vertical;
+}

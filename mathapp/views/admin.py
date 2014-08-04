@@ -62,4 +62,11 @@ def admin_blog_delete(req, context, id):
 @only_logged_in
 @only_admin_or_contrib
 def admin_problems(req, context):
+	context['problems'] = ProblemGenerator.objects.order_by('-pk')
 	return render(req, "admin_problems.html", context)
+
+@check_logged_in
+@only_logged_in
+@only_admin_or_contrib
+def admin_problems_new(req, context):
+	return render(req, "admin_problems_new.html", context)
