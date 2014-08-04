@@ -5,6 +5,12 @@
 {% block content %}
 	<h1>Dashboard</h1>
 	<hr>
+	{% if posts %}
+		<h2>Unread Blog Posts</h2>
+		<hr>
+		{% include "display_posts.html" %}
+		<hr>
+	{% endif %}
 	<p>
 		What should be displayed on the user's dashboard?
 	</p>

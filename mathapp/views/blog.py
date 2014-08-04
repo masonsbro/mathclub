@@ -11,4 +11,6 @@ from .const import *
 @check_logged_in
 def blog(req, context):
 	context['posts'] = BlogPost.objects.order_by('-pk')
+	for post in context['posts']:
+		post.seen_by.add(context['user'])
 	return render(req, "blog.html", context)

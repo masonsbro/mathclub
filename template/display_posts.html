@@ -1,0 +1,12 @@
+{% for post in posts %}
+	<h2>{{ post.title }}</h2>
+	<h5>{{ post.author.name }}</h5>
+	<h5>{{ post.date_created|date:"F j, Y" }}</h5>
+	{{ post.body|linebreaks }}
+	{% if post.date_created != post.date_modified %}
+		<h5> Last edited: {{ post.date_modified|date:"F j, Y" }}</h5>
+	{% endif %}
+	{% if not forloop.last %}<hr>{% endif %}
+{% empty %}
+	No posts found.
+{% endfor %}
