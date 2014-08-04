@@ -43,3 +43,24 @@ class BlogPost(models.Model):
 	date_created = models.DateTimeField(auto_now_add = True)
 	date_modified = models.DateTimeField(auto_now = True)
 	seen_by = models.ManyToManyField('User', related_name = 'posts_seen')
+
+class Difficulty(models.Model):
+
+	name = models.CharField(max_length = 256)
+
+class Skill(models.Model):
+
+	difficulty = models.ForeignKey('Difficulty')
+	name = models.CharField(max_length = 256)
+
+class ProblemGenerator(models.Model):
+
+	skill = models.ForeignKey('Skill')
+	name = models.CharField(max_length = 256)
+	question = models.CharField(max_length = 256)
+	answer = models.CharField(max_length = 256)
+
+	def generate_problem(self):
+		# Replace variables in question with random values
+		# Replace variables in answer with same values and evaluate
+		return self.question, float(self.answer)
