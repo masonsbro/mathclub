@@ -19,10 +19,10 @@ def practice_index(req, context):
 def practice_skill(req, context, id):
 	try:
 		context['problem'] = random.choice(ProblemGenerator.objects.filter(skill = Skill.objects.get(pk = id)))
+		req.session['problem'] = context['problem'].pk
+		context['question'], req.session['answer'] = context['problem'].generate_problem()
 	except:
 		context['problem'] = None
-	req.session['problem'] = context['problem'].pk
-	context['question'], req.session['answer'] = context['problem'].generate_problem()
 	return render(req, "practice_problem.html", context)
 
 @init_alerts
@@ -31,10 +31,10 @@ def practice_skill(req, context, id):
 def practice_difficulty(req, context, id):
 	try:
 		context['problem'] = random.choice(ProblemGenerator.objects.filter(skill__difficulty = Difficulty.objects.get(pk = id)))
+		req.session['problem'] = context['problem'].pk
+		context['question'], req.session['answer'] = context['problem'].generate_problem()
 	except:
 		context['problem'] = None
-	req.session['problem'] = context['problem'].pk
-	context['question'], req.session['answer'] = context['problem'].generate_problem()
 	return render(req, "practice_problem.html", context)
 
 @init_alerts
@@ -43,10 +43,10 @@ def practice_difficulty(req, context, id):
 def practice_all(req, context):
 	try:
 		context['problem'] = random.choice(ProblemGenerator.objects.all())
+		req.session['problem'] = context['problem'].pk
+		context['question'], req.session['answer'] = context['problem'].generate_problem()
 	except:
 		context['problem'] = None
-	req.session['problem'] = context['problem'].pk
-	context['question'], req.session['answer'] = context['problem'].generate_problem()
 	return render(req, "practice_problem.html", context)
 
 @check_logged_in
