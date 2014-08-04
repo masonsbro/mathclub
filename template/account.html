@@ -34,7 +34,13 @@
 		</div>
 		<button type="submit" class="btn btn-primary btn-block">Save</button>
 		<hr>
+	</form>
+	<form role="form" method="POST" action="/reset/">
+		{% csrf_token %}
 		<h2>Reset Practice Data</h2>
-		<a href="/reset/" class="btn btn-danger btn-block">Reset</a>
+		<div class="form-group">
+			<input type="password" class="form-control" name="password" placeholder="Password">
+		</div>
+		<input type="submit" class="btn btn-danger btn-block" style="margin-bottom: 1em;" value="Reset">
 	</form>
 {% endblock %}

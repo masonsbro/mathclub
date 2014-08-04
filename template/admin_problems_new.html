@@ -9,7 +9,7 @@
 		{% csrf_token %}
 		<div class="form-group">
 			<select class="form-control" name="skill">
-				<option value="" {% if not skill_prefill %}selected{% endif %} disabled>Skill</option>
+				<option value="-1">Skill</option>
 				{% for difficulty in difficulties %}
 					<optgroup label="{{ difficulty.name }}">
 						{% for skill in difficulty.skill_set.all %}

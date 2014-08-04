@@ -1,0 +1,16 @@
+{% extends "learn.html" %}
+{% block learn_title %}{{ skill.name }}{% endblock %}
+{% block learn_heading %}{{ skill.name }}{% endblock %}
+
+{% block learn_content %}
+	<ul class="nav nav-tabs" role="tablist">
+		<li {% if text %}class="active"{% endif %}><a href="/learn/skill/{{ skill.pk }}/text/">Text</a></li>
+		<li {% if video %}class="active"{% endif %}><a href="/learn/skill/{{ skill.pk }}/video/">Videos</a></li>
+	</ul>
+	{% for item in items %}
+		<h2>{{ item.title }}</h2>
+		<h5>{{ item.author.name }}</h5>
+		{{ item.body|safe|linebreaks }}
+		{% if not forloop.last %}<hr>{% endif %}
+	{% endfor %}
+{% endblock %}

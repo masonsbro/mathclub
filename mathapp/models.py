@@ -99,3 +99,23 @@ class Practice(models.Model):
 	problem = models.ForeignKey('ProblemGenerator')
 	correct = models.BooleanField()
 	time = models.IntegerField()
+
+class LearnItem(models.Model):
+
+	title = models.CharField(max_length = 256)
+	author = models.ForeignKey('User')
+	skill = models.ForeignKey('Skill')
+
+	class Meta:
+		abstract = True
+
+class LearnText(LearnItem):
+
+	body = models.TextField()
+
+class LearnVideo(LearnItem):
+
+	code = models.CharField(max_length = 512)
+
+	def body(self):
+		return '<div class="video-container">' + self.code + '</div>'

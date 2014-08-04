@@ -1,0 +1,32 @@
+{% extends "admin.html" %}
+
+{% block title %}Edit Learn Video{% endblock %}
+
+{% block admin_learn_video_active %}class="active"{% endblock %}
+
+{% block admin_content %}
+	<form role="form" method="POST" action="/admind/learn/video/edit/{{ video.pk }}/">
+		{% csrf_token %}
+		<div class="form-group">
+			<select class="form-control" name="skill">
+				<option value="-1">Skill</option>
+				{% for difficulty in difficulties %}
+					<optgroup label="{{ difficulty.name }}">
+						{% for skill in difficulty.skill_set.all %}
+							<option value="{{ skill.pk }}" {% if skill.pk == video.skill.pk %}selected{% endif %}>{{ skill.name }}</option>
+						{% endfor %}
+					</optgroup>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" name="title" placeholder="Title" value="{{ video.title }}">
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" name="code" placeholder="Embed Code" value="{{ video.code }}">
+		</div>
+		<div class="form-group">
+			<input type="submit" class="btn btn-primary btn-block" value="Save Learn Video">
+		</div>
+	</form>
+{% endblock %}

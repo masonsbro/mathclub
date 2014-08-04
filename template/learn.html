@@ -1,0 +1,9 @@
+{% extends "parent.html" %}
+
+{% block title %}Learn {% block learn_title %}{% endblock %}{% endblock %}
+
+{% block content %}
+	<h1>{% block learn_heading %}{% endblock %}</h1>
+	<hr>
+	{% block learn_content %}{% endblock %}
+{% endblock %}

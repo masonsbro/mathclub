@@ -6,6 +6,8 @@
 	<ul class="nav nav-tabs" role="tablist">
 		<li {% block admin_blog_active %}{% endblock %}><a href="/admind/blog/">Blog</a></li>
 		<li {% block admin_problems_active %}{% endblock %}><a href="/admind/problems/">Problems</a></li>
+		<li {% block admin_learn_text_active %}{% endblock %}><a href="/admind/learn/text/">Learn Texts</a></li>
+		<li {% block admin_learn_video_active %}{% endblock %}><a href="/admind/learn/video/">Learn Videos</a></li>
 	</ul>
 	{% include "display_alerts.html" %}
 	{% block admin_content %}{% endblock %}

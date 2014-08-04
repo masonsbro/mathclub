@@ -43,5 +43,10 @@ def practice_all(req, context):
 @check_logged_in
 @only_logged_in
 def reset(req, context):
-	Practice(user = User.get(email = req.session['email'])).delete()
+	if req.method == 'POST':
+		user = User.objects.get(email = req.session['email'])
+		if user.check_password(req.POST['password']):
+			Practice.objects.filter(user = User.objects.get(email = req.session['email'])).delete()
+		else:
+			return redirect("/account/")
 	return redirect("/")
