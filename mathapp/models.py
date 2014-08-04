@@ -49,6 +49,7 @@ class BlogPost(models.Model):
 class Difficulty(models.Model):
 
 	name = models.CharField(max_length = 256)
+	text = models.TextField()
 
 	def __unicode__(self):
 		return self.name

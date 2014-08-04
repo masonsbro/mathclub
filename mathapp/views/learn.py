@@ -29,4 +29,5 @@ def learn_skill_video(req, context, id):
 
 @check_logged_in
 def learn_difficulty(req, context, id):
+	context['difficulty'] = Difficulty.objects.get(pk = id)
 	return render(req, "learn_difficulty.html", context)
