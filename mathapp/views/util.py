@@ -23,6 +23,14 @@ def only_logged_in(func):
 			return redirect("/")
 	return wrapper
 
+def only_admin_or_contrib(func):
+	def wrapper(req, context, *args, **kwargs):
+		if context['user'].admin or context['user'].contributor:
+			return func(req, context, *args, **kwargs)
+		else:
+			return redirect("/")
+	return wrapper
+
 def init_alerts(func):
 	def wrapper(req, context = None, *args, **kwargs):
 		if context is None:

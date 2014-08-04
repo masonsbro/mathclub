@@ -28,12 +28,13 @@
 				</div>
 				<div class="navbar-collapse collapse" id="navbar-main">
 					<ul class="nav navbar-nav">
-						<li>
-							<a href="/">Home</a>
-						</li>
-						<li>
-							<a href="/blog/">Blog</a>
-						</li>
+						<li><a href="/">Home</a></li>
+						<li><a href="/blog/">Blog</a></li>
+						{% if user %}
+							{% if user.admin or user.contributor %}
+								<li><a href="/admind/">Admin</a></li>
+							{% endif %}
+						{% endif %}
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						{% if not user %}
