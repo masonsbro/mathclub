@@ -36,12 +36,23 @@ def admin_blog_new(req, context):
 @check_logged_in
 @only_logged_in
 @only_admin_or_contrib
+@must_own_post
 def admin_blog_edit(req, context, id):
-	pass
+	if req.method == 'GET':
+		context['post'] = BlogPost.objects.get(pk = id)
+		return render(req, "admin_blog_edit.html", context)
+	else:
+		# Edit post
+		post = BlogPost.objects.get(pk = id)
+		post.title = req.POST['title']
+		post.body = req.POST['body']
+		post.save()
+		return redirect("/admind/blog/")
 
 @check_logged_in
 @only_logged_in
 @only_admin_or_contrib
+@must_own_post
 def admin_blog_delete(req, context, id):
 	pass
 

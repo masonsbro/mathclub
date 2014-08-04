@@ -22,7 +22,11 @@
 				<td>{{ post.title }}</td>
 				<td>{{ post.author.name }}</td>
 				<td>{{ post.date_created|date:"F j" }}</td>
-				<td>{{ post.date_modified|date:"F j" }}</td>
+				<td>
+					{% if post.date_created != post.date_modified %}
+						{{ post.date_modified|date:"F j" }}
+					{% endif %}
+				</td>
 				{% if post.author == user or user.admin %}
 					<td><a href="/admind/blog/edit/{{ post.pk }}/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
 					<td><a href="/admind/blog/delete/{{ post.pk }}/" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a></td>
