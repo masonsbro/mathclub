@@ -72,6 +72,8 @@ class ProblemGenerator(models.Model):
 	question = models.CharField(max_length = 256)
 	answer = models.CharField(max_length = 256)
 	author = models.ForeignKey('User')
+	answer_prefix = models.CharField(max_length = 32)
+	answer_suffix = models.CharField(max_length = 32)
 
 	def generate_problem(self):
 		# Run setup code

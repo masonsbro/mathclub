@@ -25,7 +25,17 @@
 			<input type="text" class="form-control" name="question" placeholder="Question" value="{{ problem.question }}">
 		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" name="answer" placeholder="Answer" value="{{ problem.answer }}">
+			<div class="row">
+				<div class="col-xs-2 col-sm-1">
+					<input type="text" class="form-control" name="answer_prefix" value="{{ problem.answer_prefix }}">
+				</div>
+				<div class="col-xs-8 col-sm-10">
+					<input type="text" class="form-control" name="answer" placeholder="Answer" value="{{ problem.answer }}">
+				</div>
+				<div class="col-xs-2 col-sm-1">
+					<input type="text" class="form-control" name="answer_suffix" value="{{ problem.answer_suffix }}">
+				</div>
+			</div>
 		</div>
 		<div class="form-group">
 			{% if problem.name != problem.question %}

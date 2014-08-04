@@ -26,7 +26,17 @@
 			<input type="text" class="form-control" name="question" placeholder="Question" value="{{ question_prefill }}">
 		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" name="answer" placeholder="Answer" value="{{ answer_prefill }}">
+			<div class="row">
+				<div class="col-xs-2 col-sm-1">
+					<input type="text" class="form-control" name="answer_prefix" value="{{ answer_prefix_prefill }}">
+				</div>
+				<div class="col-xs-8 col-sm-10">
+					<input type="text" class="form-control" name="answer" placeholder="Answer" value="{{ answer_prefill }}">
+				</div>
+				<div class="col-xs-2 col-sm-1">
+					<input type="text" class="form-control" name="answer_suffix" value="{{ answer_suffix_prefill }}">
+				</div>
+			</div>
 		</div>
 		<div class="form-group">
 			<input type="text" class="form-control" name="name" placeholder="Optional Name" value="{{ name_prefill }}">
