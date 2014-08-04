@@ -22,5 +22,6 @@ urlpatterns = patterns('',
 	url(r'^practice/skill/(?P<id>[0-9]+)/$', views.practice_skill),
 	url(r'^practice/difficulty/(?P<id>[0-9]+)/$', views.practice_difficulty),
 	url(r'^practice/all/$', views.practice_all),
+	url(r'^reset/$', views.reset),
 	url(r'^$', views.index),
 )

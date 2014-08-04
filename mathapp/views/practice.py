@@ -39,3 +39,9 @@ def practice_all(req, context):
 	req.session['problem'] = context['problem'].pk
 	context['question'], req.session['answer'] = context['problem'].generate_problem()
 	return render(req, "practice_problem.html", context)
+
+@check_logged_in
+@only_logged_in
+def reset(req, context):
+	Practice(user = User.get(email = req.session['email'])).delete()
+	return redirect("/")
