@@ -15,6 +15,8 @@ urlpatterns = patterns('',
 	url(r'^admind/blog/delete/(?P<id>[0-9]+)/$', views.admin_blog_delete),
 	url(r'^admind/problems/$', views.admin_problems),
 	url(r'^admind/problems/new/$', views.admin_problems_new),
+	url(r'^admind/problems/edit/(?P<id>[0-9]+)/$', views.admin_problems_edit),
+	url(r'^admind/problems/delete/(?P<id>[0-9]+)/$', views.admin_problems_delete),
 	url(r'^blog/$', views.blog),
 	url(r'^$', views.index),
 )

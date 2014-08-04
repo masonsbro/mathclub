@@ -61,6 +61,9 @@ class Skill(models.Model):
 	def __unicode__(self):
 		return self.name
 
+	class Meta:
+		ordering = ['pk']
+
 class ProblemGenerator(models.Model):
 
 	skill = models.ForeignKey('Skill')
@@ -74,8 +77,8 @@ class ProblemGenerator(models.Model):
 		# Run setup code
 		# Replace [expressions] in question with evaulated versions
 		# Evaluate answer
-		exec(self.setup)
-		pattern = re.compile(r'\[.+\]')
+		exec self.setup
+		pattern = re.compile(r'\[.+?\]')
 		question = str(self.question)
 		matches = pattern.findall(question)
 		for match in matches:
