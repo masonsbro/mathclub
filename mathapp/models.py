@@ -74,6 +74,7 @@ class ProblemGenerator(models.Model):
 	author = models.ForeignKey('User')
 	answer_prefix = models.CharField(max_length = 32)
 	answer_suffix = models.CharField(max_length = 32)
+	round = models.BooleanField(default = False)
 
 	def generate_problem(self):
 		# Run setup code

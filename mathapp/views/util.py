@@ -58,10 +58,19 @@ def init_alerts(func):
 		return func(req, context, *args, **kwargs)
 	return wrapper
 
+def check_answer(correct, check):
+	try:
+		return float(correct) == float(check)
+	except:
+		pass
+	
+
+
 def log_practice(func):
 	def wrapper(req, context, *args, **kwargs):
 		if req.method == 'POST':
 			# Log answer and add alert
+
 			pass
 		return func(req, context, *args, **kwargs)
 	return wrapper
