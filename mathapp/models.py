@@ -39,6 +39,7 @@ class BlogPost(models.Model):
 
 	title = models.CharField(max_length = 256)
 	body = models.TextField()
-	author = models.ForeignKey('User')
+	author = models.ForeignKey('User', related_name = 'posts')
 	date_created = models.DateTimeField(auto_now_add = True)
 	date_modified = models.DateTimeField(auto_now = True)
+	seen_by = models.ManyToManyField('User', related_name = 'posts_seen')
