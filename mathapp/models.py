@@ -59,6 +59,7 @@ class ProblemGenerator(models.Model):
 	name = models.CharField(max_length = 256)
 	question = models.CharField(max_length = 256)
 	answer = models.CharField(max_length = 256)
+	author = models.ForeignKey('User')
 
 	def generate_problem(self):
 		# Replace variables in question with random values

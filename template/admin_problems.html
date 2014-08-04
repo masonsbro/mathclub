@@ -1,0 +1,36 @@
+{% extends "admin.html" %}
+
+{% block title %}Admin Problems{% endblock %}
+
+{% block admin_problems_active %}class="active"{% endblock %}
+
+{% block admin_content %}
+	<table class="table">
+		<tr>
+			<th>Name</th>
+			<th>Skill</th>
+			<th>Difficulty</th>
+			<th>Author</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+		<tr>
+			<td colspan="6" class="row-click"><a href="/admind/problems/new/">New Problem</a></td>
+		</tr>
+		{% for problem in problems %}
+			<tr>
+				<td>{{ problem.name }}</td>
+				<td>{{ problem.skill.name }}</td>
+				<td>{{ problem.skill.difficulty.name }}</td>
+				<td>{{ problem.author.name }}</td>
+				{% if problem.author == user or user.admin %}
+					<td><a href="/admind/problems/edit/{{ problem.pk }}/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+					<td><a href="/admind/problems/delete/{{ problem.pk }}/" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a></td>
+				{% else %}
+					<td></td>
+					<td></td>
+				{% endif %}
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
