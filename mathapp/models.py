@@ -40,3 +40,5 @@ class BlogPost(models.Model):
 	title = models.CharField(max_length = 256)
 	body = models.TextField()
 	author = models.ForeignKey('User')
+	date_created = models.DateTimeField(auto_now_add = True)
+	date_modified = models.DateTimeField(auto_now = True)
