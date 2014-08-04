@@ -17,7 +17,10 @@ def practice_index(req, context):
 @check_logged_in
 @log_practice
 def practice_skill(req, context, id):
-	context['problem'] = random.choice(ProblemGenerator.objects.filter(skill = Skill.objects.get(pk = id)))
+	try:
+		context['problem'] = random.choice(ProblemGenerator.objects.filter(skill = Skill.objects.get(pk = id)))
+	except:
+		context['problem'] = None
 	req.session['problem'] = context['problem'].pk
 	context['question'], req.session['answer'] = context['problem'].generate_problem()
 	return render(req, "practice_problem.html", context)
@@ -26,7 +29,10 @@ def practice_skill(req, context, id):
 @check_logged_in
 @log_practice
 def practice_difficulty(req, context, id):
-	context['problem'] = random.choice(ProblemGenerator.objects.filter(skill__difficulty = Difficulty.objects.get(pk = id)))
+	try:
+		context['problem'] = random.choice(ProblemGenerator.objects.filter(skill__difficulty = Difficulty.objects.get(pk = id)))
+	except:
+		context['problem'] = None
 	req.session['problem'] = context['problem'].pk
 	context['question'], req.session['answer'] = context['problem'].generate_problem()
 	return render(req, "practice_problem.html", context)
@@ -35,7 +41,10 @@ def practice_difficulty(req, context, id):
 @check_logged_in
 @log_practice
 def practice_all(req, context):
-	context['problem'] = random.choice(ProblemGenerator.objects.all())
+	try:
+		context['problem'] = random.choice(ProblemGenerator.objects.all())
+	except:
+		context['problem'] = None
 	req.session['problem'] = context['problem'].pk
 	context['question'], req.session['answer'] = context['problem'].generate_problem()
 	return render(req, "practice_problem.html", context)
