@@ -54,7 +54,9 @@ def admin_blog_edit(req, context, id):
 @only_admin_or_contrib
 @must_own_post
 def admin_blog_delete(req, context, id):
-	pass
+	post = BlogPost.objects.get(pk = id)
+	post.delete()
+	return redirect("/admind/blog/")
 
 @check_logged_in
 @only_logged_in
