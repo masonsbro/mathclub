@@ -50,10 +50,16 @@ class Difficulty(models.Model):
 
 	name = models.CharField(max_length = 256)
 
+	def __unicode__(self):
+		return self.name
+
 class Skill(models.Model):
 
 	difficulty = models.ForeignKey('Difficulty')
 	name = models.CharField(max_length = 256)
+
+	def __unicode__(self):
+		return self.name
 
 class ProblemGenerator(models.Model):
 
