@@ -6,3 +6,6 @@ from mathapp.models import *
 
 admin.site.register(User)
 admin.site.register(BlogPost)
+admin.site.register(Difficulty)
+admin.site.register(Skill)
+admin.site.register(ProblemGenerator)
