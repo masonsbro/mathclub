@@ -1,9 +1,9 @@
 {% extends "parent.html" %}
 
-{% block title %}Learn{% endblock %}
+{% block title %}Tricks{% endblock %}
 
 {% block content %}
-	<h1>Learn</h1>
+	<h1>Tricks</h1>
 	<hr>
 	{% for difficulty in difficulties %}
 		<h2><a href="/learn/difficulty/{{ difficulty.pk }}/">{{ difficulty.name }}</a></h2>
