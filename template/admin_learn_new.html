@@ -1,11 +1,11 @@
 {% extends "admin.html" %}
 
-{% block title %}New Learn Text{% endblock %}
+{% block title %}New Learn Item{% endblock %}
 
-{% block admin_learn_text_active %}class="active"{% endblock %}
+{% block admin_learn_active %}class="active"{% endblock %}
 
 {% block admin_content %}
-	<form role="form" method="POST" action="/admind/learn/text/new/">
+	<form role="form" method="POST" action="/admind/learn/new/">
 		{% csrf_token %}
 		<div class="form-group">
 			<select class="form-control" name="skill">
@@ -23,10 +23,10 @@
 			<input type="text" class="form-control" name="title" placeholder="Title" value="{{ title_prefill }}">
 		</div>
 		<div class="form-group">
-			<textarea class="form-control" name="body" rows="15">{{ body_prefill }}</textarea>
+			<textarea class="form-control" name="body" rows="15" placeholder="You can use <iframe>s to embed YouTube videos.">{{ body_prefill }}</textarea>
 		</div>
 		<div class="form-group">
-			<input type="submit" class="btn btn-primary btn-block" value="Add Learn Text">
+			<input type="submit" class="btn btn-primary btn-block" value="Add Learn Item">
 		</div>
 	</form>
 {% endblock %}

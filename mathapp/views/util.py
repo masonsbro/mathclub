@@ -49,17 +49,9 @@ def must_own_problem(func):
 			return redirect("/")
 	return wrapper
 
-def must_own_text(func):
+def must_own_learn_item(func):
 	def wrapper(req, context, id, *args, **kwargs):
-		if context['user'].admin or LearnText.objects.get(pk = id).author == context['user']:
-			return func(req, context, id, *args, **kwargs)
-		else:
-			return redirect("/")
-	return wrapper
-
-def must_own_video(func):
-	def wrapper(req, context, id, *args, **kwargs):
-		if context['user'].admin or LearnVideo.objects.get(pk = id).author == context['user']:
+		if context['user'].admin or LearnItem.objects.get(pk = id).author == context['user']:
 			return func(req, context, id, *args, **kwargs)
 		else:
 			return redirect("/")

@@ -9,7 +9,7 @@
 		<h2><a href="/learn/difficulty/{{ difficulty.pk }}/">{{ difficulty.name }}</a></h2>
 		<ul>
 			{% for skill in difficulty.skill_set.all %}
-				<li><a href="/learn/skill/{{ skill.pk }}/text/">{{ skill.name }}</a></li>
+				<li><a href="/learn/skill/{{ skill.pk }}/">{{ skill.name }}</a></li>
 			{% endfor %}
 		</ul>
 		{% if not forloop.last %}<hr>{% endif %}

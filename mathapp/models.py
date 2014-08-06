@@ -76,6 +76,7 @@ class ProblemGenerator(models.Model):
 	answer_prefix = models.CharField(max_length = 32)
 	answer_suffix = models.CharField(max_length = 32)
 	round = models.BooleanField(default = False)
+	learn_item = models.ForeignKey('LearnItem', null = True)
 
 	def generate_problem(self):
 		# Run setup code
@@ -106,17 +107,4 @@ class LearnItem(models.Model):
 	title = models.CharField(max_length = 256)
 	author = models.ForeignKey('User')
 	skill = models.ForeignKey('Skill')
-
-	class Meta:
-		abstract = True
-
-class LearnText(LearnItem):
-
 	body = models.TextField()
-
-class LearnVideo(LearnItem):
-
-	code = models.CharField(max_length = 512)
-
-	def body(self):
-		return '<div class="video-container">' + self.code + '</div>'

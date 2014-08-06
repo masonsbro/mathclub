@@ -26,7 +26,8 @@
 				</div>
 			</div>
 			<div class="form-group"><button type="submit" class="btn btn-primary btn-block">Check</button></div>
-			<p><a href="/learn/skill/{{ problem.skill.pk }}/text/">Stuck?</a></p>
+			<p><a href="/learn/skill/{{ problem.skill.pk }}/">Tricks for {{ problem.skill.name }}</a></p>
+			<p><a href="/learn/item/{{ problem.learn_item.pk }}/">Tricks for this problem</a></p>
 		</form>
 	{% else %}
 		<h2>No problem was found.</h2>

@@ -1,0 +1,11 @@
+{% extends "learn.html" %}
+{% block learn_title %}{{ item.title }}{% endblock %}
+{% block learn_heading %}{{ item.title }}{% endblock %}
+
+{% load youtube_embed %}
+
+{% block learn_content %}
+	<h2>{{ item.title }}</h2>
+	<h5>{{ item.author.name }}</h5>
+	{{ item.body|safe|add_video_containers|linebreaks }}
+{% endblock %}

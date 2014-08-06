@@ -14,17 +14,14 @@ def learn_index(req, context):
 	return render(req, "learn_index.html", context)
 
 @check_logged_in
-def learn_skill_text(req, context, id):
-	context['skill'] = Skill.objects.get(pk = id)
-	context['text'] = True
-	context['items'] = LearnText.objects.filter(skill = context['skill'])
-	return render(req, "learn_skill.html", context)
+def learn_item(req, context, id):
+	context['item'] = LearnItem.objects.get(pk = id)
+	return render(req, "learn_item.html", context)
 
 @check_logged_in
-def learn_skill_video(req, context, id):
+def learn_skill(req, context, id):
 	context['skill'] = Skill.objects.get(pk = id)
-	context['video'] = True
-	context['items'] = LearnVideo.objects.filter(skill = context['skill'])
+	context['items'] = LearnItem.objects.filter(skill = context['skill'])
 	return render(req, "learn_skill.html", context)
 
 @check_logged_in

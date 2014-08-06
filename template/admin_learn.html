@@ -1,0 +1,34 @@
+{% extends "admin.html" %}
+
+{% block title %}Admin Learn Items{% endblock %}
+
+{% block admin_learn_active %}class="active"{% endblock %}
+
+{% block admin_content %}
+	<table class="table">
+		<tr>
+			<th>Title</th>
+			<th>Skill</th>
+			<th>Author</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+		<tr>
+			<td colspan="5" class="row-click"><a href="/admind/learn/new/">New Learn Item</a></td>
+		</tr>
+		{% for item in items %}
+			<tr>
+				<td>{{ item.title }}</td>
+				<td>{{ item.skill.name }}</td>
+				<td>{{ item.author.name }}</td>
+				{% if item.author == user or user.admin %}
+					<td><a href="/admind/learn/edit/{{ item.pk }}/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+					<td><a href="/admind/learn/delete/{{ item.pk }}/" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a></td>
+				{% else %}
+					<td></td>
+					<td></td>
+				{% endif %}
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

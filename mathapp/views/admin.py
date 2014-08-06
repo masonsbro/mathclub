@@ -88,9 +88,14 @@ def admin_problems_new(req, context):
 		if int(req.POST['skill']) == -1:
 			context['danger_alerts'].append(INVALID_SKILL)
 		try:
+			learn_item = LearnItem.objects.get(pk = req.POST['learn_item'])
+		except:
+			learn_item = None
+		try:
 			problem = ProblemGenerator(skill = Skill.objects.get(pk = req.POST['skill']), name = name, setup = setup,
 				question = req.POST['question'], answer = req.POST['answer'], author = context['user'],
-				answer_prefix = req.POST['answer_prefix'], answer_suffix = req.POST['answer_suffix'], round = 'round' in req.POST)
+				answer_prefix = req.POST['answer_prefix'], answer_suffix = req.POST['answer_suffix'], round = 'round' in req.POST,
+				learn_item = learn_item)
 			try:
 				problem.generate_problem()
 			except:
@@ -98,7 +103,8 @@ def admin_problems_new(req, context):
 		except:
 			pass
 		if context['danger_alerts']:
-			context['skill_prefill'] = req.POST['skill']
+			context['skill_prefill'] = int(req.POST['skill'])
+			context['learn_item_prefill'] = int(req.POST['learn_item'])
 			context['name_prefill'] = req.POST['name']
 			context['setup_prefill'] = req.POST['setup']
 			context['question_prefill'] = req.POST['question']
@@ -138,6 +144,10 @@ def admin_problems_edit(req, context, id):
 			context['danger_alerts'].append(INVALID_SKILL)
 		problem = ProblemGenerator.objects.get(pk = id)
 		problem.skill = Skill.objects.get(pk = req.POST['skill'])
+		try:
+			problem.learn_item = LearnItem.objects.get(pk = req.POST['learn_item'])
+		except:
+			problem.learn_item = None
 		problem.name = name
 		problem.setup = setup
 		problem.question = req.POST['question']
@@ -169,20 +179,20 @@ def admin_problems_delete(req, context, id):
 @check_logged_in
 @only_logged_in
 @only_admin_or_contrib
-def admin_learn_text(req, context):
-	context['items'] = LearnText.objects.order_by('-pk')
-	return render(req, "admin_learn_text.html", context)
+def admin_learn(req, context):
+	context['items'] = LearnItem.objects.order_by('-pk')
+	return render(req, "admin_learn.html", context)
 
 @init_alerts
 @check_logged_in
 @only_logged_in
 @only_admin_or_contrib
-def admin_learn_text_new(req, context):
+def admin_learn_new(req, context):
 	if req.method == 'GET':
 		context['difficulties'] = Difficulty.objects.order_by('pk')
-		return render(req, "admin_learn_text_new.html", context)
+		return render(req, "admin_learn_new.html", context)
 	else:
-		# Create learn text
+		# Create learn item
 		if int(req.POST['skill']) == -1:
 			context['danger_alerts'].append(INVALID_SKILL)
 		if not req.POST['title']:
@@ -190,133 +200,55 @@ def admin_learn_text_new(req, context):
 		if not req.POST['body']:
 			context['danger_alerts'].append(INVALID_BODY)
 		try:
-			text = LearnText(title = req.POST['title'], author = context['user'], skill = Skill.objects.get(pk = req.POST['skill']), body = req.POST['body'])
+			item = LearnItem(title = req.POST['title'], author = context['user'], skill = Skill.objects.get(pk = req.POST['skill']), body = req.POST['body'])
 		except:
 			pass
 		if context['danger_alerts']:
-			context['skill_prefill'] = req.POST['skill']
+			context['skill_prefill'] = int(req.POST['skill'])
 			context['title_prefill'] = req.POST['title']
 			context['body_prefill'] = req.POST['body']
 			context['difficulties'] = Difficulty.objects.order_by('pk')
-			return render(req, "admin_learn_text_new.html", context)
+			return render(req, "admin_learn_new.html", context)
 		else:
-			text.save()
-			return redirect("/admind/learn/text/")
+			item.save()
+			return redirect("/admind/learn/")
 
 @init_alerts
 @check_logged_in
 @only_logged_in
 @only_admin_or_contrib
-@must_own_text
-def admin_learn_text_edit(req, context, id):
+@must_own_learn_item
+def admin_learn_edit(req, context, id):
 	if req.method == 'GET':
-		context['text'] = LearnText.objects.get(pk = id)
+		context['item'] = LearnItem.objects.get(pk = id)
 		context['difficulties'] = Difficulty.objects.order_by('pk')
-		return render(req, "admin_learn_text_edit.html", context)
+		return render(req, "admin_learn_edit.html", context)
 	else:
 		# Save edits
-		text = LearnText.objects.get(pk = id)
+		item = LearnItem.objects.get(pk = id)
 		try:
-			text.skill = Skill.objects.get(pk = req.POST['skill'])
+			item.skill = Skill.objects.get(pk = req.POST['skill'])
 		except:
 			context['danger_alerts'].append(INVALID_SKILL)
-		text.title = req.POST['title']
-		text.body = req.POST['body']
+		item.title = req.POST['title']
+		item.body = req.POST['body']
 		if not req.POST['title']:
 			context['danger_alerts'].append(INVALID_TITLE)
 		if not req.POST['body']:
 			context['danger_alerts'].append(INVALID_BODY)
 		if context['danger_alerts']:
 			context['difficulties'] = Difficulty.objects.order_by('pk')
-			context['text'] = text
-			return render(req, "admin_learn_text_edit.html", context)
+			context['item'] = item
+			return render(req, "admin_learn_edit.html", context)
 		else:
-			text.save()
-			return redirect("/admind/learn/text/")
+			item.save()
+			return redirect("/admind/learn/")
 
 @check_logged_in
 @only_logged_in
 @only_admin_or_contrib
-@must_own_text
-def admin_learn_text_delete(req, context, id):
-	text = LearnText.objects.get(pk = id)
-	text.delete()
-	return redirect("/admind/learn/text/")
-
-@check_logged_in
-@only_logged_in
-@only_admin_or_contrib
-def admin_learn_video(req, context):
-	context['items'] = LearnVideo.objects.order_by('-pk')
-	return render(req, "admin_learn_video.html", context)
-
-@init_alerts
-@check_logged_in
-@only_logged_in
-@only_admin_or_contrib
-def admin_learn_video_new(req, context):
-	if req.method == 'GET':
-		context['difficulties'] = Difficulty.objects.order_by('pk')
-		return render(req, "admin_learn_video_new.html", context)
-	else:
-		# Create learn text
-		if int(req.POST['skill']) == -1:
-			context['danger_alerts'].append(INVALID_SKILL)
-		if not req.POST['title']:
-			context['danger_alerts'].append(INVALID_TITLE)
-		if not req.POST['code']:
-			context['danger_alerts'].append(INVALID_CODE)
-		try:
-			video = LearnVideo(title = req.POST['title'], author = context['user'],
-				skill = Skill.objects.get(pk = req.POST['skill']), code = req.POST['code'])
-		except:
-			pass
-		if context['danger_alerts']:
-			context['skill_prefill'] = req.POST['skill']
-			context['title_prefill'] = req.POST['title']
-			context['code_prefill'] = req.POST['code']
-			context['difficulties'] = Difficulty.objects.order_by('pk')
-			return render(req, "admin_learn_video_new.html", context)
-		else:
-			video.save()
-			return redirect("/admind/learn/video/")
-
-@init_alerts
-@check_logged_in
-@only_logged_in
-@only_admin_or_contrib
-@must_own_video
-def admin_learn_video_edit(req, context, id):
-	if req.method == 'GET':
-		context['video'] = LearnVideo.objects.get(pk = id)
-		context['difficulties'] = Difficulty.objects.order_by('pk')
-		return render(req, "admin_learn_video_edit.html", context)
-	else:
-		# Save edits
-		video = LearnVideo.objects.get(pk = id)
-		try:
-			video.skill = Skill.objects.get(pk = req.POST['skill'])
-		except:
-			context['danger_alerts'].append(INVALID_SKILL)
-		video.title = req.POST['title']
-		video.code = req.POST['code']
-		if not req.POST['title']:
-			context['danger_alerts'].append(INVALID_TITLE)
-		if not req.POST['code']:
-			context['danger_alerts'].append(INVALID_CODE)
-		if context['danger_alerts']:
-			context['difficulties'] = Difficulty.objects.order_by('pk')
-			context['video'] = video
-			return render(req, "admin_learn_video_edit.html", context)
-		else:
-			video.save()
-			return redirect("/admind/learn/video/")
-
-@check_logged_in
-@only_logged_in
-@only_admin_or_contrib
-@must_own_video
-def admin_learn_video_delete(req, context, id):
-	video = LearnVideo.objects.get(pk = id)
-	video.delete()
-	return redirect("/admind/learn/video/")
+@must_own_learn_item
+def admin_learn_delete(req, context, id):
+	item = LearnItem.objects.get(pk = id)
+	item.delete()
+	return redirect("/admind/learn/")
