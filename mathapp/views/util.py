@@ -68,25 +68,36 @@ def init_alerts(func):
 		return func(req, context, *args, **kwargs)
 	return wrapper
 
+def check_floats_equal(float1, float2):
+	float1 = float1 * 1000
+	float2 = float2 * 1000
+	int1 = int(float1)
+	int2 = int(float2)
+	return int1 == int2
+
+def string_to_float(string):
+	try:
+		return float(string)
+	except:
+		pass
+	parts = string.split(' ')
+	if len(parts) == 1:
+		part = parts[0]
+		parts = part.split('/')
+		return float(parts[0]) / float(parts[1])
+	elif len(parts) == 2:
+		intPart = parts[0]
+		fracPart = parts[1]
+		fracs = fracPart.split('/')
+		return (float(intPart) + float(fracs[0]) / float(fracs[1]))
+	else:
+		return 0.0
+
 def check_answer(correct, check, round):
 	try:
 		if round:
 			return abs(int(check) - float(correct)) < float(correct) / 20
-		try:
-			return float(correct) == float(check)
-		except:
-			pass
-		parts = check.split(' ')
-		if len(parts) == 1:
-			part = parts[0]
-			parts = part.split('/')
-			return float(correct) == float(parts[0]) / float(parts[1])
-		elif len(parts) == 2:
-			intPart = parts[0]
-			fracPart = parts[1]
-			fracs = fracPart.split('/')
-			return float(correct) == (float(intPart) + float(fracs[0]) / float(fracs[1]))
-		return False
+		return check_floats_equal(string_to_float(check), correct)
 	except:
 		return False
 
