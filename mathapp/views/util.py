@@ -109,7 +109,8 @@ def log_practice(func):
 			correct = check_answer(req.session['answer'], req.POST['answer'], problem.round)
 			if 'email' in req.session:
 				practice = Practice(user = context['user'], problem = problem,
-					correct = correct, time = req.POST['time'])
+					correct = correct, time = req.POST['time'], question = req.session['question'],
+					correct_answer = req.session['answer'], user_answer = req.POST['answer'])
 				practice.save()
 			else:
 				context['warning_alerts'].append(NO_PROGRESS)

@@ -102,9 +102,9 @@ class Practice(models.Model):
 	correct = models.BooleanField()
 	time = models.IntegerField()
 	date = models.DateTimeField(auto_now = True, null = True)
-	question = models.CharField(max_length = 256, null = True, blank = True)
-	correct_answer = models.CharField(max_length = 256, null = True, blank = True)
-	user_answer = models.CharField(max_length = 256, null = True, blank = True)
+	question = models.CharField(max_length = 256)
+	correct_answer = models.CharField(max_length = 256)
+	user_answer = models.CharField(max_length = 256)
 
 class LearnItem(models.Model):
 

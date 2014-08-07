@@ -32,6 +32,7 @@ urlpatterns = patterns('',
 	url(r'^learn/skill/(?P<id>[0-9]+)/$', views.learn_skill),
 	url(r'^learn/difficulty/(?P<id>[0-9]+)/$', views.learn_difficulty),
 	url(r'^skill/(?P<id>[0-9]+)/$', views.skill),
+	url(r'^problem/(?P<id>[0-9]+)/$', views.problem),
 	url(r'^ajax/learn_items/skill/(?P<id>[0-9]+)/$', views.learn_items_skill),
 	url(r'^$', views.index),
 )

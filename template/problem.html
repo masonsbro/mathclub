@@ -1,10 +1,11 @@
 {% extends "parent.html" %}
 
-{% block title %}{{ skill.name }} Details{% endblock %}
+{% block title %}{{ problem.name }} Details{% endblock %}
 
 {% block content %}
-	<h1>{{ skill.name }}</h1>
-	<h2>Difficulty: {{ skill.difficulty.name }}</h2>
+	<h1>{{ problem.name }}</h1>
+	<h2>Skill: {{ problem.skill.name }}</h2>
+	<h3>Difficulty: {{ problem.skill.difficulty.name }}</h3>
 	<hr>
 	<h2>Recent Practices</h2>
 	<hr>
@@ -12,14 +13,18 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>Problem</th>
+					<th>Question</th>
+					<th>Correct Answer</th>
+					<th>Your Answer</th>
 					<th>Time</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for practice in practices %}
 					<tr {% if practice.correct %}class="success"{% else %}class="danger"{% endif %}>
-						<td><a href="/problem/{{ practice.problem.pk }}/">{{ practice.problem.name }}</a></td>
+						<td>{{ practice.question }}</td>
+						<td>{{ practice.correct_answer }}</td>
+						<td>{{ practice.user_answer }}</td>
 						<td>{{ practice.time }}s</td>
 					</tr>
 				{% endfor %}
