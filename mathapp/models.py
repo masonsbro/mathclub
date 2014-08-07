@@ -101,6 +101,7 @@ class Practice(models.Model):
 	problem = models.ForeignKey('ProblemGenerator')
 	correct = models.BooleanField()
 	time = models.IntegerField()
+	date = models.DateTimeField(auto_now = True, null = True)
 
 class LearnItem(models.Model):
 

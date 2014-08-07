@@ -11,7 +11,32 @@
 		{% include "display_posts.html" %}
 		<hr>
 	{% endif %}
-	<p>
-		TODO: Display some kind of visualization of skills.
-	</p>
+	<h2>Skills</h2>
+	<hr>
+	{% if skills %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Difficulty</th>
+					<th>Skill</th>
+					<th>Time</th>
+					<th>Correct</th>
+					<th>Practiced</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for skill in skills %}
+					<tr>
+						<td>{{ skill.difficulty.name }}</td>
+						<td>{{ skill.name }}</td>
+						<td>{{ skill.user_time }}</td>
+						<td>{{ skill.user_correct }}%</td>
+						<td>{{ skill.user_practiced }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>You don't have any skills to display. Go <a href="/practice/">practice</a>!</p>
+	{% endif %}
 {% endblock %}
