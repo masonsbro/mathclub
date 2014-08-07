@@ -21,7 +21,7 @@
 		</div>
 		<div class="form-group">
 			<select class="form-control" name="learn_item">
-				<option value="-1">Optional Learn Item</option>
+				<option value="-1">Optional Trick</option>
 				{% for difficulty in difficulties %}
 					<optgroup label="{{ difficulty.name }}"></optgroup>
 						{% for skill in difficulty.skill_set.all %}
