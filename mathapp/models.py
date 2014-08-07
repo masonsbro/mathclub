@@ -108,3 +108,6 @@ class LearnItem(models.Model):
 	author = models.ForeignKey('User')
 	skill = models.ForeignKey('Skill')
 	body = models.TextField()
+
+	class Meta:
+		ordering = ['pk']

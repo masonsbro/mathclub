@@ -8,7 +8,7 @@
 	<form role="form" method="POST" action="/admind/problems/edit/{{ problem.pk }}/">
 		{% csrf_token %}
 		<div class="form-group">
-			<select class="form-control" name="skill">
+			<select class="form-control" name="skill" id="skill">
 				{% for difficulty in difficulties %}
 					<optgroup label="{{ difficulty.name }}">
 						{% for skill in difficulty.skill_set.all %}
@@ -19,7 +19,7 @@
 			</select>
 		</div>
 		<div class="form-group">
-			<select class="form-control" name="learn_item">
+			<select class="form-control" name="learn_item" id="learn_item">
 				<option value="-1">Optional Trick</option>
 				{% for difficulty in difficulties %}
 					<optgroup label="{{ difficulty.name }}"></optgroup>
@@ -66,4 +66,8 @@
 			<input type="submit" class="btn btn-primary btn-block" value="Save Problem">
 		</div>
 	</form>
+{% endblock %}
+
+{% block scripts %}
+	<script src="/static/admin_problems.js"></script>
 {% endblock %}

@@ -4,3 +4,4 @@ from .admin import *
 from .blog import *
 from .practice import *
 from .learn import *
+from .ajax import *
