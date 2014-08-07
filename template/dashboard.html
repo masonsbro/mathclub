@@ -28,8 +28,8 @@
 				{% for skill in skills %}
 					<tr>
 						<td>{{ skill.difficulty.name }}</td>
-						<td>{{ skill.name }}</td>
-						<td>{{ skill.user_time }}</td>
+						<td><a href="/skill/{{ skill.pk}}/">{{ skill.name }}</a></td>
+						<td>{{ skill.user_time }}s</td>
 						<td>{{ skill.user_correct }}%</td>
 						<td>{{ skill.user_practiced }}</td>
 					</tr>

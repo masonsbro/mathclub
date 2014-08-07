@@ -17,7 +17,7 @@ def index(req, context):
 		context['skills'] = Skill.objects.order_by('difficulty__pk', 'pk')
 		remove_skills = []
 		for skill in context['skills']:
-			practices = Practice.objects.filter(user = context['user'], problem__skill = skill)
+			practices = Practice.objects.filter(user = context['user'], problem__skill = skill)[:100]
 			if len(practices) == 0:
 				# Don't display skills with 0 practices, but also don't modify the original list during iteration
 				remove_skills.append(skill)
@@ -35,3 +35,10 @@ def index(req, context):
 		return render(req, "dashboard.html", context)
 	else:
 		return render(req, "landing.html", context)
+
+@check_logged_in
+@only_logged_in
+def skill(req, context, id):
+	context['skill'] = Skill.objects.get(pk = id)
+	context['practices'] = Practice.objects.filter(user = context['user'], problem__skill = context['skill'])[:50]
+	return render(req, "skill.html", context)
