@@ -8,7 +8,7 @@
 
 {% block learn_content %}
 	{% for item in items %}
-		<h2>{{ item.title }}</h2>
+		<h2><a href="/learn/item/{{ item.pk }}/">{{ item.title }}</a></h2>
 		<h5>{{ item.author.name }}</h5>
 		{{ item.body|safe|add_video_containers|listify|remove_html_newlines|linebreaks }}
 		{% if not forloop.last %}<hr>{% endif %}
