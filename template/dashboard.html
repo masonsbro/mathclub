@@ -22,16 +22,30 @@
 					<th>Time</th>
 					<th>Correct</th>
 					<th>Practiced</th>
+					<th class="center-column">Practice</th>
+					<th class="center-column">Tricks</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for skill in skills %}
-					<tr>
+					<tr
+					{% if skill.user_time > 20 or skill.user_correct < 90 %}
+						class="danger"
+					{% elif skill.user_time < 5 and skill.user_correct > 97 %}
+						class="success"
+					{% endif %}
+					>
 						<td>{{ skill.difficulty.name }}</td>
 						<td><a href="/skill/{{ skill.pk}}/">{{ skill.name }}</a></td>
 						<td>{{ skill.user_time }}s</td>
 						<td>{{ skill.user_correct }}%</td>
 						<td>{{ skill.user_practiced }}</td>
+						<td class="center-column">
+							<a href="/practice/skill/{{ skill.pk }}/" class="btn btn-success"><span class="glyphicon glyphicon-flash"></span></a>
+						</td>
+						<td class="center-column">
+							<a href="/learn/skill/{{ skill.pk }}/" class="btn btn-primary"><span class="glyphicon glyphicon-book"></span></a>
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -39,4 +53,13 @@
 	{% else %}
 		<p>You don't have any skills to display. Go <a href="/practice/">practice</a>!</p>
 	{% endif %}
+	<h2>Average Performance</h2>
+	<hr>
+	<div class="hidden" id="ajax">dashboard_chart</div>
+	<div class="chart" id="chart">Loading chart...</div>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="/static/chart.js"></script>
 {% endblock %}

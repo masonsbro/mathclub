@@ -20,15 +20,40 @@ def learn_items_skill(req, id):
 
 @check_logged_in
 @only_logged_in
+def dashboard_chart(req, context):
+	try:
+		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date
+	except:
+		# No practices yet
+		return HttpResponse('[]')
+	now = timezone.now()
+	days = [['Date', '% Correct', 'Time']]
+	while cur_day <= now:
+		practices = Practice.objects.filter(date__lte = cur_day)[0:500]
+		correct = 0
+		for practice in practices:
+			correct += int(practice.correct)
+		days.append((cur_day.strftime('%B %d').replace(' 0', ' '),
+			correct * 100 / practices.count(),
+			int(practices.aggregate(Avg('time'))['time__avg'] * 10) / 10.0))
+		cur_day += datetime.timedelta(1)
+	return HttpResponse(json.dumps(days))
+
+@check_logged_in
+@only_logged_in
 def skill_chart(req, context, id):
-	cur_day = Practice.objects.filter(problem__skill__pk = id, user = context['user']).order_by('date')[0].date
+	try:
+		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date
+	except:
+		# No practices yet
+		return HttpResponse('[]')
 	now = timezone.now()
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
 		practices = Practice.objects.filter(date__lte = cur_day)[0:50]
 		correct = 0
 		for practice in practices:
-			if practice.correct: correct += 1
+			correct += int(practice.correct)
 		days.append((cur_day.strftime('%B %d').replace(' 0', ' '),
 			correct * 100 / practices.count(),
 			int(practices.aggregate(Avg('time'))['time__avg'] * 10) / 10.0))
@@ -38,14 +63,18 @@ def skill_chart(req, context, id):
 @check_logged_in
 @only_logged_in
 def problem_chart(req, context, id):
-	cur_day = Practice.objects.filter(problem__pk = id, user = context['user']).order_by('date')[0].date
+	try:
+		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date
+	except:
+		# No practices yet
+		return HttpResponse('[]')
 	now = timezone.now()
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
 		practices = Practice.objects.filter(date__lte = cur_day)[0:10]
 		correct = 0
 		for practice in practices:
-			if practice.correct: correct += 1
+			correct += int(practice.correct)
 		days.append((cur_day.strftime('%B %d').replace(' 0', ' '),
 			correct * 100 / practices.count(),
 			int(practices.aggregate(Avg('time'))['time__avg'] * 10) / 10.0))

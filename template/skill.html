@@ -14,6 +14,7 @@
 				<tr>
 					<th>Problem</th>
 					<th>Time</th>
+					<th class="center-column">Tricks</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,6 +22,13 @@
 					<tr {% if practice.correct %}class="success"{% else %}class="danger"{% endif %}>
 						<td><a href="/problem/{{ practice.problem.pk }}/">{{ practice.problem.name }}</a></td>
 						<td>{{ practice.time }}s</td>
+						<td class="center-column">
+							{% if practice.problem.learn_item %}
+								<a href="/learn/item/{{ practice.problem.learn_item.pk }}/" class="btn btn-primary">
+									<span class="glyphicon glyphicon-book"></span>
+								</a>
+							{% endif %}
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -31,7 +39,7 @@
 	<h2>Average Performance</h2>
 	<hr>
 	<div class="hidden" id="ajax">skill_chart/{{ skill.pk }}</div>
-	<div class="chart" id="chart"></div>
+	<div class="chart" id="chart">Loading chart...</div>
 {% endblock %}
 
 {% block scripts %}
