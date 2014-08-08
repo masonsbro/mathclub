@@ -26,7 +26,7 @@ def dashboard_chart(req, context):
 	except:
 		# No practices yet
 		return HttpResponse('[]')
-	now = timezone.now().date()
+	now = timezone.now().date() + datetime.timedelta(1)
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
 		practices = Practice.objects.filter(date__lte = cur_day)[0:500]
@@ -47,7 +47,7 @@ def skill_chart(req, context, id):
 	except:
 		# No practices yet
 		return HttpResponse('[]')
-	now = timezone.now().date()
+	now = timezone.now().date() + datetime.timedelta(1)
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
 		practices = Practice.objects.filter(date__lte = cur_day)[0:50]
@@ -68,7 +68,7 @@ def problem_chart(req, context, id):
 	except:
 		# No practices yet
 		return HttpResponse('[]')
-	now = timezone.now().date()
+	now = timezone.now().date() + datetime.timedelta(1)
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
 		practices = Practice.objects.filter(date__lte = cur_day)[0:10]
