@@ -22,7 +22,7 @@ def learn_items_skill(req, id):
 @only_logged_in
 def dashboard_chart(req, context):
 	try:
-		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date() + datetime.dimedelta(1)
+		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date() + datetime.timedelta(1)
 	except:
 		# No practices yet
 		return HttpResponse('[]')
@@ -43,7 +43,7 @@ def dashboard_chart(req, context):
 @only_logged_in
 def skill_chart(req, context, id):
 	try:
-		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date() + datetime.dimedelta(1)
+		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date() + datetime.timedelta(1)
 	except:
 		# No practices yet
 		return HttpResponse('[]')
@@ -64,7 +64,7 @@ def skill_chart(req, context, id):
 @only_logged_in
 def problem_chart(req, context, id):
 	try:
-		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date() + datetime.dimedelta(1)
+		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date() + datetime.timedelta(1)
 	except:
 		# No practices yet
 		return HttpResponse('[]')
