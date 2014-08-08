@@ -18,7 +18,7 @@
 		</tr>
 		{% for item in items %}
 			<tr>
-				<td>{{ item.title }}</td>
+				<td><a href="/learn/item/{{ item.pk }}/">{{ item.title }}</a></td>
 				<td>{{ item.skill.name }}</td>
 				<td>{{ item.author.name }}</td>
 				{% if item.author == user or user.admin %}
