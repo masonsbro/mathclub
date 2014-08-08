@@ -30,6 +30,8 @@ def dashboard_chart(req, context):
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
 		practices = Practice.objects.filter(date__lte = cur_day)[0:500]
+		if practices.count() == 0:
+			break
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
@@ -51,6 +53,8 @@ def skill_chart(req, context, id):
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
 		practices = Practice.objects.filter(date__lte = cur_day)[0:50]
+		if practices.count() == 0:
+			break
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
@@ -72,6 +76,8 @@ def problem_chart(req, context, id):
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
 		practices = Practice.objects.filter(date__lte = cur_day)[0:10]
+		if practices.count() == 0:
+			break
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
