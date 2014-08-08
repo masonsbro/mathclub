@@ -3,12 +3,13 @@
 {% block learn_heading %}{{ skill.name }}{% endblock %}
 
 {% load youtube_embed %}
+{% load lists %}
 
 {% block learn_content %}
 	{% for item in items %}
 		<h2>{{ item.title }}</h2>
 		<h5>{{ item.author.name }}</h5>
-		{{ item.body|safe|add_video_containers|linebreaks }}
+		{{ item.body|safe|add_video_containers|listify|linebreaks }}
 		{% if not forloop.last %}<hr>{% endif %}
 	{% endfor %}
 {% endblock %}

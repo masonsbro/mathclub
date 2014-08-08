@@ -3,9 +3,10 @@
 {% block learn_heading %}{{ item.title }}{% endblock %}
 
 {% load youtube_embed %}
+{% load lists %}
 
 {% block learn_content %}
 	<h2>{{ item.title }}</h2>
 	<h5>{{ item.author.name }}</h5>
-	{{ item.body|safe|add_video_containers|linebreaks }}
+	{{ item.body|safe|add_video_containers|listify|linebreaks }}
 {% endblock %}
