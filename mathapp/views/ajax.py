@@ -22,7 +22,7 @@ def learn_items_skill(req, id):
 @only_logged_in
 def dashboard_chart(req, context):
 	try:
-		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date()
+		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date() + datetime.dimedelta(1)
 	except:
 		# No practices yet
 		return HttpResponse('[]')
@@ -30,8 +30,6 @@ def dashboard_chart(req, context):
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
 		practices = Practice.objects.filter(date__lte = cur_day)[0:500]
-		if practices.count() == 0:
-			break
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
@@ -45,7 +43,7 @@ def dashboard_chart(req, context):
 @only_logged_in
 def skill_chart(req, context, id):
 	try:
-		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date()
+		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date() + datetime.dimedelta(1)
 	except:
 		# No practices yet
 		return HttpResponse('[]')
@@ -53,8 +51,6 @@ def skill_chart(req, context, id):
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
 		practices = Practice.objects.filter(date__lte = cur_day)[0:50]
-		if practices.count() == 0:
-			break
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
@@ -68,7 +64,7 @@ def skill_chart(req, context, id):
 @only_logged_in
 def problem_chart(req, context, id):
 	try:
-		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date()
+		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date() + datetime.dimedelta(1)
 	except:
 		# No practices yet
 		return HttpResponse('[]')
@@ -76,8 +72,6 @@ def problem_chart(req, context, id):
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
 		practices = Practice.objects.filter(date__lte = cur_day)[0:10]
-		if practices.count() == 0:
-			break
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
