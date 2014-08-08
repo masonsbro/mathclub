@@ -34,7 +34,6 @@ def listify(value):
 	for line in lines:
 		item_type = line_has_list_item(line)
 		if item_type is not None:
-			# TODO
 			indent = len(line) - len(line.lstrip())
 			if indent > cur_indent:
 				cur_indent = indent
