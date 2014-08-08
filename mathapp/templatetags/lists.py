@@ -46,6 +46,9 @@ def listify(value):
 		else:
 			# Close stack and add line normally
 			value += ''.join(stack[::-1])
+			if len(stack) > 0:
+				value += '\n'
+			stack = []
 			value += line + '\n'
 			cur_indent = -1
 	return mark_safe(value)
