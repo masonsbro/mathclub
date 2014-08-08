@@ -43,14 +43,14 @@ def dashboard_chart(req, context):
 @only_logged_in
 def skill_chart(req, context, id):
 	try:
-		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date() + datetime.timedelta(1)
+		cur_day = Practice.objects.filter(user = context['user'], problem__skill__pk = id).order_by('date')[0].date.date() + datetime.timedelta(1)
 	except:
 		# No practices yet
 		return HttpResponse('[]')
 	now = timezone.now().date() + datetime.timedelta(1)
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
-		practices = Practice.objects.filter(date__lte = cur_day).order_by('-date')[0:50]
+		practices = Practice.objects.filter(date__lte = cur_day, problem__skill__pk = id).order_by('-date')[0:50]
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
@@ -64,14 +64,14 @@ def skill_chart(req, context, id):
 @only_logged_in
 def problem_chart(req, context, id):
 	try:
-		cur_day = Practice.objects.filter(user = context['user']).order_by('date')[0].date.date() + datetime.timedelta(1)
+		cur_day = Practice.objects.filter(user = context['user'], problem__pk = id).order_by('date')[0].date.date() + datetime.timedelta(1)
 	except:
 		# No practices yet
 		return HttpResponse('[]')
 	now = timezone.now().date() + datetime.timedelta(1)
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
-		practices = Practice.objects.filter(date__lte = cur_day).order_by('-date')[0:10]
+		practices = Practice.objects.filter(date__lte = cur_day, problem__pk = id).order_by('-date')[0:10]
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
