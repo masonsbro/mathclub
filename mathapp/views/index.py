@@ -47,5 +47,5 @@ def skill(req, context, id):
 @only_logged_in
 def problem(req, context, id):
 	context['problem'] = ProblemGenerator.objects.get(pk = id)
-	context['practices'] = Practice.objects.filter(problem = context['problem'])
+	context['practices'] = Practice.objects.filter(user = context['user'], problem = context['problem'])
 	return render(req, "problem.html", context)

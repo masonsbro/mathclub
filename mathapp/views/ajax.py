@@ -1,7 +1,12 @@
+import datetime
+import json
+
 from django.shortcuts import render, redirect
 from django.core.validators import validate_email
 from django.core import serializers
 from django.http import HttpResponse
+from django.db.models import Avg
+from django.utils import timezone
 
 from mathapp.models import *
 
@@ -12,3 +17,37 @@ from .const import *
 
 def learn_items_skill(req, id):
 	return HttpResponse(serializers.serialize("json", LearnItem.objects.filter(skill__pk = id)))
+
+@check_logged_in
+@only_logged_in
+def skill_chart(req, context, id):
+	cur_day = Practice.objects.filter(problem__skill__pk = id, user = context['user']).order_by('date')[0].date
+	now = timezone.now()
+	days = [['Date', '% Correct', 'Time']]
+	while cur_day <= now:
+		practices = Practice.objects.filter(date__lte = cur_day)[0:50]
+		correct = 0
+		for practice in practices:
+			if practice.correct: correct += 1
+		days.append((cur_day.strftime('%B %d').replace(' 0', ' '),
+			correct * 100 / practices.count(),
+			int(practices.aggregate(Avg('time'))['time__avg'] * 10) / 10.0))
+		cur_day += datetime.timedelta(1)
+	return HttpResponse(json.dumps(days))
+
+@check_logged_in
+@only_logged_in
+def problem_chart(req, context, id):
+	cur_day = Practice.objects.filter(problem__pk = id, user = context['user']).order_by('date')[0].date
+	now = timezone.now()
+	days = [['Date', '% Correct', 'Time']]
+	while cur_day <= now:
+		practices = Practice.objects.filter(date__lte = cur_day)[0:10]
+		correct = 0
+		for practice in practices:
+			if practice.correct: correct += 1
+		days.append((cur_day.strftime('%B %d').replace(' 0', ' '),
+			correct * 100 / practices.count(),
+			int(practices.aggregate(Avg('time'))['time__avg'] * 10) / 10.0))
+		cur_day += datetime.timedelta(1)
+	return HttpResponse(json.dumps(days))

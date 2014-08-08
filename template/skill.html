@@ -28,4 +28,13 @@
 	{% else %}
 		<p>You haven't practiced recently. Go <a href="/practice/">practice</a>!</p>
 	{% endif %}
+	<h2>Average Performance</h2>
+	<hr>
+	<div class="hidden" id="ajax">skill_chart/{{ skill.pk }}</div>
+	<div class="chart" id="chart"></div>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="/static/chart.js"></script>
 {% endblock %}
