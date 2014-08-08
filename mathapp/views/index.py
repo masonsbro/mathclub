@@ -40,12 +40,12 @@ def index(req, context):
 @only_logged_in
 def skill(req, context, id):
 	context['skill'] = Skill.objects.get(pk = id)
-	context['practices'] = Practice.objects.filter(user = context['user'], problem__skill = context['skill'])[:50]
+	context['practices'] = Practice.objects.filter(user = context['user'], problem__skill = context['skill']).order_by('-date')[:50]
 	return render(req, "skill.html", context)
 
 @check_logged_in
 @only_logged_in
 def problem(req, context, id):
 	context['problem'] = ProblemGenerator.objects.get(pk = id)
-	context['practices'] = Practice.objects.filter(user = context['user'], problem = context['problem'])
+	context['practices'] = Practice.objects.filter(user = context['user'], problem = context['problem']).order_by('-date')[:50]
 	return render(req, "problem.html", context)
