@@ -12,7 +12,7 @@
 				{% for difficulty in difficulties %}
 					<optgroup label="{{ difficulty.name }}">
 						{% for skill in difficulty.skill_set.all %}
-							<option value="{{ skill.pk }}" {% if skill.pk == problem.skill.pk %}selected{% endif %}>{{ skill.name }}</option>
+							<option value="{{ skill.pk }}" {% if skill == problem.skill %}selected{% endif %}>{{ skill.name }}</option>
 						{% endfor %}
 					</optgroup>
 				{% endfor %}
@@ -26,8 +26,6 @@
 						{% for skill in difficulty.skill_set.all %}
 							<optgroup label="&nbsp;{{ skill.name }}">
 								{% for item in skill.learnitem_set.all %}
-									{{ item }}
-									{{ problem.learn_item }}
 									<option value="{{ item.pk }}" {% if item == problem.learn_item %}selected{% endif %}>{{ item.title }}</option>
 								{% endfor %}
 							</optgroup>
