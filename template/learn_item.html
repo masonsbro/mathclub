@@ -4,9 +4,10 @@
 
 {% load youtube_embed %}
 {% load lists %}
+{% load html_fix %}
 
 {% block learn_content %}
 	<h2>{{ item.title }}</h2>
 	<h5>{{ item.author.name }}</h5>
-	{{ item.body|safe|add_video_containers|listify|linebreaks }}
+	{{ item.body|safe|add_video_containers|listify|remove_html_newlines|linebreaks }}
 {% endblock %}
