@@ -34,7 +34,7 @@ def index(req, context):
 			skill.user_raw_correct = float(skill.total_correct) / skill.user_practiced
 			skill.user_raw_time = float(skill.total_time) / skill.user_practiced
 			# Derived on paper
-			skill.user_score = int(min((5400 * skill.user_raw_correct) / skill.user_raw_time, 720 * skill.user_raw_correct - 320))
+			skill.user_score = int(min((5400 * skill.user_raw_correct - 2400) / skill.user_raw_time, 720 * skill.user_raw_correct - 320))
 			skill.target_score = TargetScore.objects.get(user = context['user'], difficulty = skill.difficulty).score
 		context['skills'] = [x for x in context['skills'] if x not in remove_skills]
 		return render(req, "dashboard.html", context)
