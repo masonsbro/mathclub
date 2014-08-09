@@ -101,16 +101,31 @@ def account(req, context):
 					user.set_password(req.POST['password'])
 			if req.POST['name']:
 				user.name = req.POST['name']
-			# Update target scores
-			difficulties = Difficulty.objects.all()
-			for difficulty in difficulties:
-				if 'target_score_' + str(difficulty.pk) in req.POST and req.POST['target_score_' + str(difficulty.pk)]:
-					try:
-						ts = TargetScore.objects.get(user = context['user'], difficulty = difficulty)
-						ts.score = int(req.POST['target_score_' + str(difficulty.pk)])
-						ts.save()
-					except:
-						context['danger_alerts'].append(INVALID_SCORE)
+		if context['danger_alerts']:
+			return render(req, "account.html", context)
+		else:
+			user.save()
+			return redirect("/")
+
+@init_alerts
+@check_logged_in
+@only_logged_in
+def goals(req, context):
+	if req.method == 'GET':
+		return render(req, "goals.html", context)
+	else:
+		# Process goal changes
+		user = context['user']
+		# Update target scores
+		difficulties = Difficulty.objects.all()
+		for difficulty in difficulties:
+			if req.POST['target_score_' + str(difficulty.pk)]:
+				try:
+					ts = TargetScore.objects.get(user = context['user'], difficulty = difficulty)
+					ts.score = int(req.POST['target_score_' + str(difficulty.pk)])
+					ts.save()
+				except:
+					context['danger_alerts'].append(INVALID_SCORE)
 		if context['danger_alerts']:
 			return render(req, "account.html", context)
 		else:

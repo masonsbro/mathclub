@@ -1,0 +1,23 @@
+{% extends "parent.html" %}
+
+{% block title %}Goals{% endblock %}
+
+{% block content %}
+	<h1>Goals</h1>
+	<hr>
+	{% include "display_alerts.html" %}
+	<form role="form" method="POST" action="/account/">
+		{% csrf_token %}
+		<input type="text" name="prevent_autofill_1" style="display: none">
+		<input type="password" name="prevent_autofill_2" style="display: none">
+		<h2>Update Target Scores</h2>
+		{% for target_score in user.targetscore_set.all %}
+			<div class="form-group">
+				<h3>{{ target_score.difficulty.name }}</h3>
+				<input type="text" class="form-control" name="target_score_{{ target_score.difficulty.pk }}" placeholder="Target Score" value="{{ target_score.score }}">
+			</div>
+		{% endfor %}
+		<button type="submit" class="btn btn-primary btn-block">Save</button>
+		<hr>
+	</form>
+{% endblock %}
