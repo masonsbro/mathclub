@@ -6,7 +6,7 @@
 	{% include "display_alerts.html" %}
 	<h1>Practice</h1>
 	<hr>
-	{% if problem %}
+	{% if problem and not error %}
 		<h2>Difficulty: {{ problem.skill.difficulty.name }}</h2>
 		<h3>Skill: {{ problem.skill.name }}</h3>
 		<hr>
@@ -31,8 +31,24 @@
 				<p><a href="/learn/item/{{ problem.learn_item.pk }}/">Tricks for this problem</a></p>
 			{% endif %}
 		</form>
+	{% elif not problem %}
+		<h2>A problem could not be generated.</h2>
 	{% else %}
-		<h2>No problem was found.</h2>
+		<h2>An error was encountered while generating this problem.</h2>
+		<p>
+			Please send this error report to {{ problem.author.name }}. Sorry for the inconvenience. To get a new problem, click "Practice" in the navigation bar at the top of the page.
+		</p>
+		<pre>
+Problem ID: {{ problem.pk }}
+Problem Name: {{ problem.name }}
+Stack trace:
+
+{% for fn, ln, f, text in error %}
+File {{ fn }}, line {{ ln }}, function {{ f }}:
+	{{ text }}
+
+{% endfor %}
+		</pre>
 	{% endif %}
 {% endblock %}
 

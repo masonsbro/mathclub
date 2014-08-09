@@ -46,3 +46,9 @@ chart {
 .center-column {
 	text-align: center;
 }
+
+pre {
+	overflow-x: scroll;
+	white-space: pre;
+	word-wrap: normal;
+}

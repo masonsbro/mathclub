@@ -1,3 +1,6 @@
+import traceback
+import sys
+
 from django.shortcuts import render, redirect
 from django.core.validators import validate_email
 
@@ -19,9 +22,12 @@ def practice_index(req, context):
 def practice_skill(req, context, id):
 	try:
 		context['problem'] = random.choice(ProblemGenerator.objects.filter(skill = Skill.objects.get(pk = id)))
-		req.session['problem'] = context['problem'].pk
-		context['question'], req.session['answer'] = context['problem'].generate_problem()
-		req.session['question'] = context['question']
+		try:
+			req.session['problem'] = context['problem'].pk
+			context['question'], req.session['answer'] = context['problem'].generate_problem()
+			req.session['question'] = context['question']
+		except:
+			context['error'] = traceback.extract_tb(sys.exc_traceback, 10)
 	except:
 		context['problem'] = None
 	return render(req, "practice_problem.html", context)
@@ -32,9 +38,12 @@ def practice_skill(req, context, id):
 def practice_difficulty(req, context, id):
 	try:
 		context['problem'] = random.choice(ProblemGenerator.objects.filter(skill__difficulty = Difficulty.objects.get(pk = id)))
-		req.session['problem'] = context['problem'].pk
-		context['question'], req.session['answer'] = context['problem'].generate_problem()
-		req.session['question'] = context['question']
+		try:
+			req.session['problem'] = context['problem'].pk
+			context['question'], req.session['answer'] = context['problem'].generate_problem()
+			req.session['question'] = context['question']
+		except:
+			context['error'] = traceback.extract_tb(sys.exc_traceback, 10)
 	except:
 		context['problem'] = None
 	return render(req, "practice_problem.html", context)
@@ -49,7 +58,7 @@ def practice_all(req, context):
 		context['question'], req.session['answer'] = context['problem'].generate_problem()
 		req.session['question'] = context['question']
 	except:
-		context['problem'] = None
+		context['error'] = traceback.extract_tb(sys.exc_traceback, 10)
 	return render(req, "practice_problem.html", context)
 
 @check_logged_in
