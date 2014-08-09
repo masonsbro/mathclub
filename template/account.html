@@ -38,6 +38,7 @@
 	<form role="form" method="POST" action="/reset/">
 		{% csrf_token %}
 		<h2>Reset Practice Data</h2>
+		<p><strong>Warning</strong>: This will remove all practice history associated with your account. Ever. You will lose all progress. If you have been doing poorly recently, you're better off just practicing; only your most recent practice data will be used anyway.</p>
 		<div class="form-group">
 			<input type="password" class="form-control" name="password" placeholder="Password">
 		</div>
