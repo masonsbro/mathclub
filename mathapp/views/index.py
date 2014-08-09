@@ -29,7 +29,7 @@ def index(req, context):
 				skill.user_practiced += 1
 				skill.total_time += practice.time
 				skill.total_correct += int(practice.correct)
-			skill.user_time = skill.total_time / skill.user_practiced
+			skill.user_time = int(10.0 * skill.total_time / skill.user_practiced) / 10.0
 			skill.user_correct = 100 * skill.total_correct / skill.user_practiced
 			skill.user_raw_correct = float(skill.total_correct) / skill.user_practiced
 			skill.user_raw_time = float(skill.total_time) / skill.user_practiced
