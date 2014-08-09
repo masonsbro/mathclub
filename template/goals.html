@@ -11,6 +11,9 @@
 		<input type="text" name="prevent_autofill_1" style="display: none">
 		<input type="password" name="prevent_autofill_2" style="display: none">
 		<h2>Update Target Scores</h2>
+		<p>
+			These scores are out of 400. Each score is for a single difficulty: if you were to take a test of 80 questions, all of that difficulty, what would you hope to score on it? These are <strong>not</strong> your final scores. If you want to score 300 total, the 1-20 difficulty should have a target score of 400; you won't get your 300 total if you can't do extremely well on the first 20 problems.
+		</p>
 		{% for target_score in user.targetscore_set.all %}
 			<div class="form-group">
 				<h3>{{ target_score.difficulty.name }}</h3>
