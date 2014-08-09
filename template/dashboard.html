@@ -22,6 +22,7 @@
 					<th>Time</th>
 					<th>Correct</th>
 					<th>Practiced</th>
+					<th>Score</th>
 					<th class="center-column">Practice</th>
 					<th class="center-column">Tricks</th>
 				</tr>
@@ -29,10 +30,8 @@
 			<tbody>
 				{% for skill in skills %}
 					<tr
-					{% if skill.user_time > 20 or skill.user_correct < 90 %}
+					{% if skill.user_score < skill.target_score %}
 						class="danger"
-					{% elif skill.user_time < 5 and skill.user_correct > 97 %}
-						class="success"
 					{% endif %}
 					>
 						<td>{{ skill.difficulty.name }}</td>
@@ -40,6 +39,7 @@
 						<td>{{ skill.user_time }}s</td>
 						<td>{{ skill.user_correct }}%</td>
 						<td>{{ skill.user_practiced }}</td>
+						<td>{{ skill.user_score }}</td>
 						<td class="center-column">
 							<a href="/practice/skill/{{ skill.pk }}/" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-flash"></span></a>
 						</td>

@@ -37,6 +37,15 @@ class User(models.Model):
 		# Check it against the stored one
 		return self.password_hash == hashed
 
+class TargetScore(models.Model):
+
+	user = models.ForeignKey('User')
+	difficulty = models.ForeignKey('Difficulty')
+	score = models.IntegerField(default = 230)
+
+	class Meta:
+		ordering = ['difficulty__pk']
+
 class BlogPost(models.Model):
 
 	title = models.CharField(max_length = 256)

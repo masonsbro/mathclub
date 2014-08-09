@@ -28,6 +28,14 @@
 			<input type="password" class="form-control" name="password_confirm" placeholder="Confirm Password">
 		</div>
 		<hr>
+		<h2>Update Target Scores</h2>
+		{% for target_score in user.targetscore_set.all %}
+			<div class="form-group">
+				<h3>{{ target_score.difficulty.name }}</h3>
+				<input type="text" class="form-control" name="target_score_{{ target_score.difficulty.pk }}" placeholder="Target Score" value="{{ target_score.score }}">
+			</div>
+		{% endfor %}
+		<hr>
 		<h2>Save Changes</h2>
 		<div class="form-group">
 			<input type="password" class="form-control" name="password_current" placeholder="Current Password">

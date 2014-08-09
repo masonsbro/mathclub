@@ -252,3 +252,14 @@ def admin_learn_delete(req, context, id):
 	item = LearnItem.objects.get(pk = id)
 	item.delete()
 	return redirect("/admind/learn/")
+
+@check_logged_in
+@only_logged_in
+@only_admin_or_contrib
+def update_target_scores(req, context):
+	users = User.objects.all()
+	difficulties = Difficulty.objects.all()
+	for user in users:
+		for difficulty in difficulties:
+			TargetScore.objects.get_or_create(user = user, difficulty = difficulty)
+	return redirect("/admind/blog/")
