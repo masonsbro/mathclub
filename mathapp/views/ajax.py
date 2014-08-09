@@ -33,7 +33,7 @@ def dashboard_chart(req, context):
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
-		days.append((cur_day.strftime('%B %d').replace(' 0', ' '),
+		days.append(((cur_day - datetime.timedelta(1)).strftime('%B %d').replace(' 0', ' '),
 			correct * 100 / practices.count(),
 			int(practices.aggregate(Avg('time'))['time__avg'] * 10) / 10.0))
 		cur_day += datetime.timedelta(1)
@@ -54,7 +54,7 @@ def skill_chart(req, context, id):
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
-		days.append((cur_day.strftime('%B %d').replace(' 0', ' '),
+		days.append(((cur_day - datetime.timedelta(1)).strftime('%B %d').replace(' 0', ' '),
 			correct * 100 / practices.count(),
 			int(practices.aggregate(Avg('time'))['time__avg'] * 10) / 10.0))
 		cur_day += datetime.timedelta(1)
@@ -75,7 +75,7 @@ def problem_chart(req, context, id):
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
-		days.append((cur_day.strftime('%B %d').replace(' 0', ' '),
+		days.append(((cur_day - datetime.timedelta(1)).strftime('%B %d').replace(' 0', ' '),
 			correct * 100 / practices.count(),
 			int(practices.aggregate(Avg('time'))['time__avg'] * 10) / 10.0))
 		cur_day += datetime.timedelta(1)
