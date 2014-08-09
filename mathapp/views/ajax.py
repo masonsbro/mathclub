@@ -71,7 +71,7 @@ def problem_chart(req, context, id):
 	now = timezone.now().date() + datetime.timedelta(1)
 	days = [['Date', '% Correct', 'Time']]
 	while cur_day <= now:
-		practices = Practice.objects.filter(date__lte = cur_day, problem__pk = id).order_by('-date')[0:10]
+		practices = Practice.objects.filter(date__lte = cur_day, problem__pk = id).order_by('-date')[0:50]
 		correct = 0
 		for practice in practices:
 			if practice.correct: correct += 1
