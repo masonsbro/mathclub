@@ -85,7 +85,7 @@ class ProblemGenerator(models.Model):
 	answer_prefix = models.CharField(max_length = 32)
 	answer_suffix = models.CharField(max_length = 32)
 	round = models.BooleanField(default = False)
-	learn_item = models.ForeignKey('LearnItem', null = True)
+	learn_item = models.ManyToManyField('LearnItem')
 
 	def generate_problem(self):
 		# Run setup code

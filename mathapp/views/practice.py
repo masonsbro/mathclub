@@ -21,7 +21,7 @@ def practice_index(req, context):
 @log_practice
 def practice_skill(req, context, id):
 	try:
-		context['problem'] = random.choice(ProblemGenerator.objects.filter(skill = Skill.objects.get(pk = id)))
+		context['problem'] = random.choice(ProblemGenerator.objects.filter(skill__pk = id))
 		try:
 			req.session['problem'] = context['problem'].pk
 			context['question'], req.session['answer'] = context['problem'].generate_problem()
@@ -37,7 +37,39 @@ def practice_skill(req, context, id):
 @log_practice
 def practice_difficulty(req, context, id):
 	try:
-		context['problem'] = random.choice(ProblemGenerator.objects.filter(skill__difficulty = Difficulty.objects.get(pk = id)))
+		context['problem'] = random.choice(ProblemGenerator.objects.filter(skill__difficulty__pk = id))
+		try:
+			req.session['problem'] = context['problem'].pk
+			context['question'], req.session['answer'] = context['problem'].generate_problem()
+			req.session['question'] = context['question']
+		except:
+			context['error'] = traceback.extract_tb(sys.exc_traceback, 10)
+	except:
+		context['problem'] = None
+	return render(req, "practice_problem.html", context)
+
+@init_alerts
+@check_logged_in
+@log_practice
+def practice_problem(req, context, id):
+	try:
+		context['problem'] = ProblemGenerator.objects.get(pk = id)
+		try:
+			req.session['problem'] = context['problem'].pk
+			context['question'], req.session['answer'] = context['problem'].generate_problem()
+			req.session['question'] = context['question']
+		except:
+			context['error'] = traceback.extract_tb(sys.exc_traceback, 10)
+	except:
+		context['problem'] = None
+	return render(req, "practice_problem.html", context)
+
+@init_alerts
+@check_logged_in
+@log_practice
+def practice_trick(req, context, id):
+	try:
+		context['problem'] = random.choice(ProblemGenerator.objects.filter(learn_item__pk = id))
 		try:
 			req.session['problem'] = context['problem'].pk
 			context['question'], req.session['answer'] = context['problem'].generate_problem()
