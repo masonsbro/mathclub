@@ -1,11 +1,14 @@
 $(function() {
 	$("#skill").change(function(event) {
-		var values = $.map($('#learn_item option:selected'), function(e) { return e.value; });
+		var values = $.map($('#learn_item option:selected'), function(e) { return parseInt(e.value); });
+		console.log(values);
 		$("#learn_item optgroup").remove();
 		$("#learn_item").empty();
 		$.getJSON("/ajax/learn_items/skill/" + $("#skill").val() + "/", function(data) {
 			$("#learn_item").empty();
 			data.forEach(function(element) {
+				console.log(element.pk);
+				console.log($.inArray(element.pk, values));
 				if ($.inArray(element.pk, values) != -1) {
 					$("#learn_item").append("<option value=\"" + element.pk + "\" selected>" + element.fields.title + "</option>");
 				} else {

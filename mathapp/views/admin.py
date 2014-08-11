@@ -143,7 +143,6 @@ def admin_problems_edit(req, context, id):
 		problem.skill = Skill.objects.get(pk = req.POST['skill'])
 		problem.learn_item.clear()
 		for item in req.POST.getlist('learn_item'):
-			print item
 			problem.learn_item.add(LearnItem.objects.get(pk = item))
 		problem.name = name
 		problem.setup = setup
