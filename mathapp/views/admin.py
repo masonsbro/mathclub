@@ -74,7 +74,6 @@ def admin_problems_new(req, context):
 		context['difficulties'] = Difficulty.objects.order_by('pk')
 		return render(req, "admin_problems_new.html", context)
 	else:
-		print req.POST
 		if req.POST['name']:
 			name = req.POST['name']
 		else:
@@ -95,7 +94,7 @@ def admin_problems_new(req, context):
 			try:
 				problem.generate_problem()
 				problem.save()
-				for item in req.POST['learn_item']:
+				for item in req.POST.getlist('learn_item'):
 					problem.learn_item.add(LearnItem.objects.get(pk = item))
 			except:
 				context['danger_alerts'].append(PROBLEM_NO_GENERATE)
@@ -103,7 +102,7 @@ def admin_problems_new(req, context):
 			context['danger_alerts'].append(GENERIC_ERROR)
 		if context['danger_alerts']:
 			context['skill_prefill'] = int(req.POST['skill'])
-			context['learn_item_prefill'] = map(int, req.POST['learn_item'])
+			context['learn_item_prefill'] = map(int, req.POST.getlist('learn_item'))
 			context['name_prefill'] = req.POST['name']
 			context['setup_prefill'] = req.POST['setup']
 			context['question_prefill'] = req.POST['question']
@@ -142,8 +141,9 @@ def admin_problems_edit(req, context, id):
 			context['danger_alerts'].append(INVALID_SKILL)
 		problem = ProblemGenerator.objects.get(pk = id)
 		problem.skill = Skill.objects.get(pk = req.POST['skill'])
-		problem.learn_item.empty()
-		for item in req.POST['learn_item']:
+		problem.learn_item.clear()
+		for item in req.POST.getlist('learn_item'):
+			print item
 			problem.learn_item.add(LearnItem.objects.get(pk = item))
 		problem.name = name
 		problem.setup = setup
